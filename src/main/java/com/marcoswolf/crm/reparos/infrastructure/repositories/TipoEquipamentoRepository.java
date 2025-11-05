@@ -1,4 +1,11 @@
 package com.marcoswolf.crm.reparos.infrastructure.repositories;
 
-public interface TipoEquipamentoRepository {
+import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
+import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface TipoEquipamentoRepository extends JpaRepository<TipoEquipamento, Integer> {
+    List<TipoEquipamento> findByNomeContainingIgnoreCase(String nome);
 }
