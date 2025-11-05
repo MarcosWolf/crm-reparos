@@ -1,5 +1,6 @@
 package com.marcoswolf.crm.reparos.infrastructure.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,7 +24,6 @@ public class Reparo {
     private LocalDate dataSaida;
     private String descricaoProblema;
     private String servicoExecutado;
-    private Double valor;
 
     @ManyToOne
     @JoinColumn(name = "equipamento_id")
@@ -32,4 +32,11 @@ public class Reparo {
     @ManyToOne
     @JoinColumn(name = "status_id")
     private StatusReparo status;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pagamento_id")
+    @JsonManagedReference
+    private Pagamento pagamento;
+
+
 }
