@@ -27,6 +27,12 @@ public class ClienteController {
         return ResponseEntity.ok(clientes);
     }
 
+    @PutMapping
+    public ResponseEntity<Cliente> atualizarCliente(@RequestParam Integer id, @RequestBody Cliente cliente) {
+        Cliente clienteAtualizado = service.atualizarCliente(id, cliente);
+        return ResponseEntity.ok(clienteAtualizado);
+    }
+
     @DeleteMapping
     public ResponseEntity<String> deletarClientePorId(@RequestParam Integer id) {
         try {
