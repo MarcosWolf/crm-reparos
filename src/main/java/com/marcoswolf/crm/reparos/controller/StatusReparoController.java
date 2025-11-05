@@ -1,0 +1,29 @@
+package com.marcoswolf.crm.reparos.controller;
+
+import com.marcoswolf.crm.reparos.business.StatusReparoService;
+import com.marcoswolf.crm.reparos.infrastructure.entities.StatusReparo;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/status-reparo")
+@RequiredArgsConstructor
+
+public class StatusReparoController {
+    private final StatusReparoService service;
+
+    @PostMapping
+    public ResponseEntity<StatusReparo> salvarStatusReparo(@RequestBody StatusReparo statusReparo) {
+        service.salvarStatusReparo(statusReparo);
+        return ResponseEntity.ok(statusReparo);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<StatusReparo>> buscarStatusReparo(@RequestParam String nome) {
+        List<StatusReparo> statusReparos = service.buscarPorNome(nome);
+        return ResponseEntity.ok(statusReparos);
+    }
+}

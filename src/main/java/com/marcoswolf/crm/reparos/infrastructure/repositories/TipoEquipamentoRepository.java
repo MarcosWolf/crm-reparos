@@ -1,6 +1,5 @@
 package com.marcoswolf.crm.reparos.infrastructure.repositories;
 
-import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import org.springframework.data.jpa.repository.JpaRepository;
 

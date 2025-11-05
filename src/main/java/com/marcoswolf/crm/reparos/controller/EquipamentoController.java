@@ -13,17 +13,17 @@ import java.util.List;
 @RequiredArgsConstructor
 
 public class EquipamentoController {
-    private final EquipamentoService equipamentoService;
+    private final EquipamentoService service;
 
     @PostMapping
     public ResponseEntity<Equipamento> salvarEquipamento(@RequestBody Equipamento equipamento) {
-        equipamentoService.salvarEquipamento(equipamento);
+        service.salvarEquipamento(equipamento);
         return ResponseEntity.ok(equipamento);
     }
 
     @GetMapping
     public ResponseEntity<List<Equipamento>> buscarPorNumeroSerie(@RequestParam String numeroSerie) {
-        List<Equipamento> equipamentos = equipamentoService.buscarPorNumeroSerie(numeroSerie);
+        List<Equipamento> equipamentos = service.buscarPorNumeroSerie(numeroSerie);
         return ResponseEntity.ok(equipamentos);
     }
 }

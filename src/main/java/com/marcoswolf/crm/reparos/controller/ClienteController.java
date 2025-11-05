@@ -13,17 +13,17 @@ import java.util.List;
 @RequiredArgsConstructor
 
 public class ClienteController {
-    private final ClienteService clienteService;
+    private final ClienteService service;
 
     @PostMapping
     public ResponseEntity<Cliente> salvarCliente(@RequestBody Cliente cliente) {
-        clienteService.salvarCliente(cliente);
+        service.salvarCliente(cliente);
         return ResponseEntity.ok(cliente);
     }
 
     @GetMapping
     public ResponseEntity<List<Cliente>> buscarPorNome(@RequestParam String nome) {
-        List<Cliente> clientes = clienteService.buscarPorNome(nome);
+        List<Cliente> clientes = service.buscarPorNome(nome);
         return ResponseEntity.ok(clientes);
     }
 }

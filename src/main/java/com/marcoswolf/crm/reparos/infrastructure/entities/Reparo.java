@@ -23,8 +23,7 @@ public class Reparo {
     private LocalDate dataSaida;
     private String descricaoProblema;
     private String servicoExecutado;
-    private Double Valor;
-    private String Status;
+    private Double valor;
 
     @ManyToOne
     @JoinColumn(name = "equipamento_id")

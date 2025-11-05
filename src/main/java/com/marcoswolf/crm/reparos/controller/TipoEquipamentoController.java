@@ -13,17 +13,17 @@ import java.util.List;
 @RequiredArgsConstructor
 
 public class TipoEquipamentoController {
-    private final TipoEquipamentoService tipoEquipamentoService;
+    private final TipoEquipamentoService service;
 
     @PostMapping
     public ResponseEntity<TipoEquipamento> salvarTipoEquipamento(@RequestBody TipoEquipamento tipoEquipamento) {
-        tipoEquipamentoService.salvarTipoEquipamento(tipoEquipamento);
+        service.salvarTipoEquipamento(tipoEquipamento);
         return ResponseEntity.ok(tipoEquipamento);
     }
 
     @GetMapping
     public ResponseEntity<List<TipoEquipamento>> buscarPorNome(@RequestParam String nome) {
-        List<TipoEquipamento> equipamentos = tipoEquipamentoService.buscarPorNome(nome);
+        List<TipoEquipamento> equipamentos = service.buscarPorNome(nome);
         return ResponseEntity.ok(equipamentos);
     }
 }
