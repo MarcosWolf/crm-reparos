@@ -1,13 +1,13 @@
 package com.marcoswolf.crm.reparos;
 
-import org.springframework.boot.SpringApplication;
+import javafx.application.Application;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class CrmReparosApplication {
-
 	public static void main(String[] args) {
-		SpringApplication.run(CrmReparosApplication.class, args);
+        Application.launch(JavaFxApp.class, args);
+		//SpringApplication.run(CrmReparosApplication.class, args);
 	}
 
 }
