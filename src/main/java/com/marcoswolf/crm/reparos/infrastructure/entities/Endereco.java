@@ -13,7 +13,11 @@ import lombok.*;
 @Embeddable
 public class Endereco {
     private String cidade;
-    private String estado;
+
+    @ManyToOne
+    @JoinColumn(name = "estado_id")
+    private Estado estado;
+
     private String bairro;
     private String logradouro;
     private Integer numero;

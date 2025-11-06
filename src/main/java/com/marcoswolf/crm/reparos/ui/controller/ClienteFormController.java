@@ -2,10 +2,16 @@ package com.marcoswolf.crm.reparos.ui.controller;
 
 import static com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils.*;
 import static com.marcoswolf.crm.reparos.ui.utils.FormValidator.*;
+
+import com.marcoswolf.crm.reparos.business.ClienteService;
 import com.marcoswolf.crm.reparos.business.EstadoService;
+import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
+import com.marcoswolf.crm.reparos.infrastructure.entities.Endereco;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
 import com.marcoswolf.crm.reparos.ui.utils.FormValidator;
+import com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -21,6 +27,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ClienteFormController {
     private final EstadoService estadoService;
+    private final ClienteService clienteService;
 
     @FXML
     private TextField txtNome;
@@ -110,11 +117,41 @@ public class ClienteFormController {
         campos.put("Cidade", txtCidade);
         campos.put("Estado", comboEstado);
 
-        if (!FormValidator.validarCamposObrigatorios(campos)) {
-            return;
-        }
+        if (!FormValidator.validarCamposObrigatorios(campos)) return;
 
-        //Chamar a requisição para salvar
-        System.out.println("Salvandoooo");
+        Endereco endereco = Endereco.builder()
+                .cidade(txtCidade.getText())
+                .bairro(txtBairro.getText())
+                .logradouro(txtLogradouro.getText())
+                .numero(parseInteger(txtNumero))
+                .cep(txtCep.getText())
+                .estado(comboEstado.getValue())
+                .build();
+
+        Cliente cliente = Cliente.builder()
+                .nome(txtNome.getText())
+                .telefone(txtTelefone.getText())
+                .email(txtEmail.getText())
+                .endereco(endereco)
+                .build();
+
+        try {
+            clienteService.salvarCliente(cliente);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sucesso");
+            alert.setHeaderText(null);
+            alert.setContentText("Cliente salvo com sucesso!");
+            alert.showAndWait();
+
+            ((AnchorPane) rootPane.getParent()).getChildren().remove(rootPane);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao salvar");
+            alert.setHeaderText("Não foi possível salvar o cliente");
+            alert.setContentText(e.getMessage() != null ? e.getMessage() : "Erro desconhecido.");
+            alert.showAndWait();
+        }
     }
 }
