@@ -6,5 +6,4 @@ O sistema permite cadastrar clientes, equipamentos, registrar ordens de reparo e
 
 Ideal para oficinas e técnicos que precisam organizar o fluxo de serviços de forma prática e centralizada.
 
-<img width="1322" height="959" alt="image" src="https://github.com/user-attachments/assets/e3bc6379-fb1f-437a-a9c1-63bfa0cc9630" />
-
+<img width="922" height="759" alt="image" src="https://github.com/user-attachments/assets/5a6335e5-8b74-4538-ac8e-33916d5bb5c6" />
