@@ -16,11 +16,9 @@
     <children>
         <VBox layoutX="30" layoutY="20" prefWidth="740" spacing="15">
 
-            <!-- Título -->
             <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Cadastrar Cliente" />
             <Separator />
 
-            <!-- Seção: Dados Pessoais -->
             <VBox spacing="10" style="-fx-background-color: #FFFFFF; -fx-padding: 15; -fx-background-radius: 8;">
                 <Label style="-fx-font-weight: bold;" text="Dados Pessoais" />
 
@@ -47,7 +45,6 @@
                 </GridPane>
             </VBox>
 
-            <!-- Seção: Endereço -->
             <VBox spacing="10" style="-fx-background-color: #FFFFFF; -fx-padding: 15; -fx-background-radius: 8;">
                 <Label style="-fx-font-weight: bold;" text="Endereço" />
 
@@ -62,6 +59,9 @@
                     <Label text="Cidade:" GridPane.rowIndex="1" />
                     <TextField fx:id="txtCidade" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
+                    <Label text="Estado:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <ComboBox fx:id="comboEstado" prefHeight="24.0" prefWidth="243.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
                     <Label text="Bairro:" GridPane.rowIndex="2" />
                     <TextField fx:id="txtBairro" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
@@ -73,10 +73,6 @@
 
                     <Label text="Número:" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                     <TextField fx:id="txtNumero" prefHeight="24.0" prefWidth="101.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-
-                    <!-- 👇 Mova o Estado para linha 3 -->
-                    <Label text="Estado:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                    <ComboBox fx:id="comboEstado" prefHeight="24.0" prefWidth="243.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                <rowConstraints>
                   <RowConstraints />
                   <RowConstraints />
@@ -87,7 +83,6 @@
                 </GridPane>
             </VBox>
 
-            <!-- Botões -->
             <HBox alignment="CENTER_RIGHT" spacing="10">
                 <Button fx:id="btnSalvar" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Salvar" />
                 <Button fx:id="btnCancelar" onAction="#onCancelar" style="-fx-background-color: #E53935; -fx-text-fill: white;" text="Cancelar" />
