@@ -28,7 +28,7 @@ public class TipoEquipamentoService {
         var tipoEquipamentos = tipoEquipamentoRepository.findByNomeContainingIgnoreCase(nome);
 
         if (tipoEquipamentos.isEmpty()) {
-            throw new RuntimeException("Nenhum tipo de equipamento encontrado.");
+            throw new RuntimeException("Tipo de equipamento não encontrado.");
         }
 
         return tipoEquipamentos;
@@ -49,10 +49,10 @@ public class TipoEquipamentoService {
         var tipoEquipamento = tipoEquipamentoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tipo de equipamento não encontrado."));
 
-        boolean possuiEquipamentos = !equipamentoRepository.findByTipoEquipamento_Id(id).isEmpty();
+        boolean possuiEquipamento = !equipamentoRepository.findByTipoEquipamento_Id(id).isEmpty();
 
-        if (possuiEquipamentos) {
-            throw new RuntimeException("Não é possível excluir o tipo de equipamento: existem equipamentos associados.");
+        if (possuiEquipamento) {
+            throw new RuntimeException("Não é possível excluir o tipo de equipamento: existe equipamento associado.");
         }
 
         tipoEquipamentoRepository.delete(tipoEquipamento);

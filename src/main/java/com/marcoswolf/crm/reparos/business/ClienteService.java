@@ -28,7 +28,7 @@ public class ClienteService {
         var clientes = clienteRepository.findByNomeContainingIgnoreCase(nome);
 
         if (clientes.isEmpty()) {
-            throw new RuntimeException("Nenhum Cliente encontrado");
+            throw new RuntimeException("Cliente não encontrado.");
         }
 
         return clientes;
@@ -70,7 +70,7 @@ public class ClienteService {
         boolean possuiReparos = !reparoRepository.findByEquipamento_Cliente_Id(id).isEmpty();
 
         if (possuiReparos) {
-            throw new RuntimeException("Não é possível excluir o cliente: existem reparos associados.");
+            throw new RuntimeException("Não é possível excluir o cliente: existe reparo associado.");
         }
 
         clienteRepository.delete(cliente);

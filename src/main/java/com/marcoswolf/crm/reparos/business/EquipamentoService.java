@@ -27,7 +27,7 @@ public class EquipamentoService {
         var equipamentos = equipamentoRepository.findByNumeroSerieContainingIgnoreCase(numeroSerie);
 
         if (equipamentos.isEmpty()) {
-            throw new RuntimeException("Nenhum Equipamento encontrado");
+            throw new RuntimeException("Equipamento não encontrado.");
         }
 
         return equipamentos;
@@ -56,7 +56,7 @@ public class EquipamentoService {
         boolean possuiReparos = !reparoRepository.findByEquipamento_Id(id).isEmpty();
 
         if (possuiReparos) {
-            throw new RuntimeException("Não é possível excluir o equipamento: existem reparos associados.");
+            throw new RuntimeException("Não é possível excluir o equipamento: existe reparo associado.");
         }
 
         equipamentoRepository.delete(equipamento);
