@@ -84,7 +84,7 @@
             </VBox>
 
             <HBox alignment="CENTER_RIGHT" spacing="10">
-                <Button fx:id="btnSalvar" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Salvar" />
+                <Button fx:id="btnSalvar" onAction="#onSalvar" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Salvar" />
                 <Button fx:id="btnCancelar" onAction="#onCancelar" style="-fx-background-color: #E53935; -fx-text-fill: white;" text="Cancelar" />
             </HBox>
 

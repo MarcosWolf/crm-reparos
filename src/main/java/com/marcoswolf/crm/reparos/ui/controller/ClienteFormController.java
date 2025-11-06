@@ -1,15 +1,21 @@
 package com.marcoswolf.crm.reparos.ui.controller;
 
+import static com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils.*;
+import static com.marcoswolf.crm.reparos.ui.utils.FormValidator.*;
 import com.marcoswolf.crm.reparos.business.EstadoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
+import com.marcoswolf.crm.reparos.ui.utils.FormValidator;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -17,14 +23,38 @@ public class ClienteFormController {
     private final EstadoService estadoService;
 
     @FXML
+    private TextField txtNome;
+
+    @FXML
+    private TextField txtTelefone;
+
+    @FXML
+    private TextField txtEmail;
+
+    @FXML
+    private TextField txtCidade;
+
+    @FXML
     private ComboBox<Estado> comboEstado;
+
+    @FXML
+    private TextField txtBairro;
+
+    @FXML
+    private TextField txtCep;
+
+    @FXML
+    private TextField txtLogradouro;
+
+    @FXML
+    private TextField txtNumero;
 
     @FXML
     private AnchorPane rootPane;
 
     @FXML
     private void initialize() {
-        carregarEstados();
+        aplicarFiltros();
     }
 
     private void carregarEstados() {
@@ -55,9 +85,36 @@ public class ClienteFormController {
         });
     }
 
+    private void aplicarFiltros() {
+        aplicarLimite(txtNome, 50);
+        aplicarMascaraTelefone(txtTelefone);
+        aplicarLimite(txtEmail, 80);
+        aplicarLimite(txtCidade, 50);
+        aplicarLimite(txtBairro, 50);
+        aplicarMascaraCEP(txtCep);
+        aplicarLimite(txtLogradouro, 80);
+        aplicarLimite(txtNumero, 8);
+        carregarEstados();
+    }
+
     @FXML
     private void onCancelar() {
         ((AnchorPane) rootPane.getParent()).getChildren().remove(rootPane);
     }
 
+    @FXML
+    private void onSalvar() {
+        Map<String, Object> campos = new LinkedHashMap<>();
+        campos.put("Nome", txtNome);
+        campos.put("Telefone", txtTelefone);
+        campos.put("Cidade", txtCidade);
+        campos.put("Estado", comboEstado);
+
+        if (!FormValidator.validarCamposObrigatorios(campos)) {
+            return;
+        }
+
+        //Chamar a requisição para salvar
+        System.out.println("Salvandoooo");
+    }
 }
