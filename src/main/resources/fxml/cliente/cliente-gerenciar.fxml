@@ -17,7 +17,7 @@
         <VBox layoutX="30" layoutY="20" prefWidth="800" spacing="15">
             <HBox alignment="CENTER_LEFT">
             <Label fx:id="lblTitulo"
-                   text="Cadastrar Cliente"
+                   text="Gerenciar Clientes"
                    styleClass="titulo-principal"
                    HBox.hgrow="ALWAYS"/>
             <Region HBox.hgrow="ALWAYS" />
