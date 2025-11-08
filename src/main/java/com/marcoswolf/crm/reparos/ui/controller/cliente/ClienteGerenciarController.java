@@ -4,6 +4,7 @@ import com.marcoswolf.crm.reparos.business.cliente.ClienteService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.ui.config.SpringFXMLLoader;
 import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
+import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,6 +25,7 @@ public class ClienteGerenciarController {
     private final ClienteService clienteService;
     private final SpringFXMLLoader fxmlLoader;
     private final MainViewController mainViewController;
+    private final ViewNavigator navigator;
 
     @FXML private AnchorPane rootPane;
 
@@ -158,11 +160,15 @@ public class ClienteGerenciarController {
 
     @FXML
     public void onNovo() {
-        mainViewController.abrirTela("/fxml/cliente/cliente-form.fxml", null);
+        navigator.openView("/fxml/cliente/cliente-form.fxml",
+                mainViewController.getContentArea(),
+                null);
     }
 
     @FXML
     public void abrirTelaEdicao(Cliente cliente) {
-        mainViewController.abrirTela("/fxml/cliente/cliente-form.fxml", cliente);
+        navigator.openView("/fxml/cliente/cliente-form.fxml",
+                mainViewController.getContentArea(),
+                cliente);
     }
 }

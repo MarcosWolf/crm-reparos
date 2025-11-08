@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ClienteService {
+public class ClienteService implements IClienteConsultaService, IClienteComandoService {
     private final ClienteRepository clienteRepository;
     private final ReparoRepository reparoRepository;
 

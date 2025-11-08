@@ -5,6 +5,7 @@ import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.ui.config.SpringFXMLLoader;
 import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
+import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +25,7 @@ public class TipoEquipamentoGerenciarController {
     private final TipoEquipamentoService tipoEquipamentoService;
     private final SpringFXMLLoader fxmlLoader;
     private final MainViewController mainViewController;
+    private final ViewNavigator navigator;
 
     @FXML private AnchorPane rootPane;
 
@@ -73,11 +75,15 @@ public class TipoEquipamentoGerenciarController {
 
     @FXML
     public void onNovo(ActionEvent actionEvent) {
-        mainViewController.abrirTela("/fxml/tipoEquipamento/tipoEquipamento-form.fxml", null);
+        navigator.openView("/fxml/tipoEquipamento/tipoEquipamento-form.fxml",
+                mainViewController.getContentArea(),
+                null);
     }
 
     @FXML
     public void abrirTelaEdicao(TipoEquipamento tipoEquipamento) {
-        mainViewController.abrirTela("/fxml/tipoEquipamento/tipoEquipamento-form.fxml", tipoEquipamento);
+        navigator.openView("/fxml/tipoEquipamento/tipoEquipamento-form.fxml",
+                mainViewController.getContentArea(),
+                tipoEquipamento);
     }
 }
