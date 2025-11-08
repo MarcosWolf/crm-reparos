@@ -4,6 +4,7 @@ import com.marcoswolf.crm.reparos.business.cliente.IClienteComandoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.ui.utils.AlertService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,10 +20,15 @@ public class ClienteSalvarAction implements ClienteAction {
     public boolean execute(Cliente clienteEditando, ClienteFormData data) {
         try {
             validator.validar(data);
+
             Cliente cliente = mapper.map(data, clienteEditando);
             clienteComandoService.salvarCliente(cliente);
+
             alertService.info("Sucesso", "Cliente salvo com sucesso!");
             return true;
+        } catch (IllegalArgumentException e) {
+            alertService.warn("Campos obrigatórios", e.getMessage());
+            return false;
         } catch (Exception e) {
             alertService.error("Erro ao salvar", e.getMessage());
             return false;

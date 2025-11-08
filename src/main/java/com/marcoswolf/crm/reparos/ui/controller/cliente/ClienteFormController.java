@@ -96,8 +96,10 @@ public class ClienteFormController implements DataReceiver<Cliente> {
                 txtCidade.getText(), txtBairro.getText(), txtCep.getText(),
                 txtLogradouro.getText(), parseInteger(txtNumero), comboEstado.getValue()
         );
-        salvarAction.execute(clienteEditando, data);
-        onVoltar();
+
+        boolean sucesso = salvarAction.execute(clienteEditando, data);
+
+        if (sucesso) onVoltar();
     }
 
     @FXML
