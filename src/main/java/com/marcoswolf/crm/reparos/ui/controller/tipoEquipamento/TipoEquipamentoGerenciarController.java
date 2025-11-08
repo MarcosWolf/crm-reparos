@@ -1,7 +1,6 @@
 package com.marcoswolf.crm.reparos.ui.controller.tipoEquipamento;
 
-import com.marcoswolf.crm.reparos.business.TipoEquipamentoService;
-import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
+import com.marcoswolf.crm.reparos.business.tipoEquipamento.TipoEquipamentoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.ui.config.SpringFXMLLoader;
 import com.marcoswolf.crm.reparos.ui.controller.MainViewController;

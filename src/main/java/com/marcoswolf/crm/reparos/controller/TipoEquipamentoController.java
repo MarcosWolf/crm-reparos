@@ -1,6 +1,6 @@
 package com.marcoswolf.crm.reparos.controller;
 
-import com.marcoswolf.crm.reparos.business.TipoEquipamentoService;
+import com.marcoswolf.crm.reparos.business.tipoEquipamento.TipoEquipamentoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

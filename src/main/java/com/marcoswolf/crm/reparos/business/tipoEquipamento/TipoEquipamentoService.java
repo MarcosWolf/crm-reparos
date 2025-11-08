@@ -1,4 +1,4 @@
-package com.marcoswolf.crm.reparos.business;
+package com.marcoswolf.crm.reparos.business.tipoEquipamento;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.EquipamentoRepository;

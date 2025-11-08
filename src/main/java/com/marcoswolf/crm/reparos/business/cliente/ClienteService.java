@@ -6,9 +6,7 @@ import com.marcoswolf.crm.reparos.infrastructure.repositories.ClienteRepository;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.ReparoRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ClienteService implements IClienteConsultaService, IClienteComandoService {
@@ -26,34 +24,8 @@ public class ClienteService implements IClienteConsultaService, IClienteComandoS
     }
 
     // Read
-    public List<Cliente> buscarPorNome(String nome) {
-        return clienteRepository.findByNomeContainingIgnoreCase(nome);
-    }
-
-    public List<Cliente> filtrarClientes(ClienteFiltro filtro) {
-        var clientes = clienteRepository.findAll();
-
-        return clientes.stream()
-                .filter(c -> {
-                    if (filtro.getNome() == null || filtro.getNome().isBlank()) return true;
-                    return c.getNome() != null && c.getNome().toLowerCase().contains(filtro.getNome().toLowerCase().trim());
-                })
-
-                .filter(c -> !filtro.isPendentes()
-                        || reparoRepository.existsByEquipamento_Cliente_IdAndPagamento_PagoFalse(c.getId()))
-
-                .filter(c -> !filtro.isInativos()
-                        || !reparoRepository.existsByEquipamento_Cliente_IdAndDataEntradaAfter(
-                        c.getId(), LocalDate.now().minusDays(90)))
-
-                .filter(c -> !filtro.isRecentes()
-                        || reparoRepository.existsByEquipamento_Cliente_IdAndDataEntradaAfter(
-                        c.getId(), LocalDate.now().minusDays(30)))
-
-                .filter(c -> !filtro.isComReparos()
-                        || reparoRepository.existsByEquipamento_Cliente_IdAndConcluidoFalse(c.getId()))
-
-                .collect(Collectors.toList());
+    public List<Cliente> listarTodos() {
+        return clienteRepository.findAll();
     }
 
     // Update
@@ -66,19 +38,19 @@ public class ClienteService implements IClienteConsultaService, IClienteComandoS
         cliente.setEmail(novoCliente.getEmail());
 
         if (novoCliente.getEndereco() != null) {
-            if (cliente.getEndereco() != null) {
-                cliente.setEndereco(new Endereco());
+            Endereco endereco = cliente.getEndereco();
+
+            if (endereco == null) {
+                endereco = new Endereco();
+                cliente.setEndereco(endereco);
             }
 
-            var endereco = cliente.getEndereco();
-            var novoEndereco = novoCliente.getEndereco();
-
-            endereco.setCidade(novoEndereco.getCidade());
-            endereco.setEstado(novoEndereco.getEstado());
-            endereco.setBairro(novoEndereco.getBairro());
-            endereco.setLogradouro(novoEndereco.getLogradouro());
-            endereco.setNumero(novoEndereco.getNumero());
-            endereco.setCep(novoEndereco.getCep());
+            endereco.setCidade(novoCliente.getEndereco().getCidade());
+            endereco.setEstado(novoCliente.getEndereco().getEstado());
+            endereco.setBairro(novoCliente.getEndereco().getBairro());
+            endereco.setLogradouro(novoCliente.getEndereco().getLogradouro());
+            endereco.setNumero(novoCliente.getEndereco().getNumero());
+            endereco.setCep(novoCliente.getEndereco().getCep());
         }
 
         return clienteRepository.saveAndFlush(cliente);

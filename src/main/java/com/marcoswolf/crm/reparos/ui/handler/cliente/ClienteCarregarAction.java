@@ -13,6 +13,6 @@ public class ClienteCarregarAction {
     private final IClienteConsultaService clienteConsultaService;
 
     public List<Cliente> carregarTodos() {
-        return clienteConsultaService.buscarPorNome("");
+        return clienteConsultaService.listarTodos();
     }
 }

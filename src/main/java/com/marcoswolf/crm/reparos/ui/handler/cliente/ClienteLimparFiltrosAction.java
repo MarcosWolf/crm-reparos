@@ -29,7 +29,7 @@ public class ClienteLimparFiltrosAction {
             chkInativos.setSelected(false);
             txtBuscar.clear();
 
-            var clientes = clienteConsultaService.buscarPorNome("");
+            var clientes = clienteConsultaService.listarTodos();
             tabelaClientes.setItems(FXCollections.observableList(clientes));
         } catch (Exception e) {
             alertService.error("Erro", "Falha ao limpar filtros: " + e.getMessage());

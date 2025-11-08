@@ -1,4 +1,4 @@
-package com.marcoswolf.crm.reparos.business.cliente;
+package com.marcoswolf.crm.reparos.business.cliente.filtro;
 
 import lombok.Data;
 import java.time.LocalDate;

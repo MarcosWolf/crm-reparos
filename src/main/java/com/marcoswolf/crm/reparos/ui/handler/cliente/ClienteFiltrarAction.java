@@ -1,7 +1,8 @@
 package com.marcoswolf.crm.reparos.ui.handler.cliente;
 
-import com.marcoswolf.crm.reparos.business.cliente.ClienteFiltro;
+import com.marcoswolf.crm.reparos.business.cliente.filtro.ClienteFiltro;
 import com.marcoswolf.crm.reparos.business.cliente.IClienteConsultaService;
+import com.marcoswolf.crm.reparos.business.cliente.filtro.IClienteFiltroService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.ui.utils.AlertService;
 import lombok.RequiredArgsConstructor;
@@ -12,14 +13,14 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class ClienteFiltrarAction {
-    private final IClienteConsultaService clienteConsultaService;
+    private final IClienteFiltroService clienteFiltroService;
     private final AlertService alertService;
 
     public List<Cliente> executar(ClienteFiltroDTO filtroDTO) {
         ClienteFiltro filtro = toFiltro(filtroDTO);
 
         try {
-            return clienteConsultaService.filtrarClientes(filtro);
+            return clienteFiltroService.aplicarFiltros(filtro);
         } catch (Exception e) {
             return List.of();
         }
