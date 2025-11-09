@@ -37,10 +37,12 @@ public class ClienteFormController implements DataReceiver<Cliente> {
     @FXML private Button btnExcluir;
     @FXML private ComboBox<Estado> comboEstado;
 
+    private static final String GERENCIAR_PATH = "/fxml/cliente/cliente-gerenciar.fxml";
+
     @FXML
     public void initialize() {
         configurarCampos();
-        ComboBoxUtils.carregarEstados(comboEstado, estadoConsultaService);
+        alimentarComboBox();
     }
 
     private void configurarCampos() {
@@ -52,6 +54,20 @@ public class ClienteFormController implements DataReceiver<Cliente> {
         MaskUtils.aplicarMascaraCEP(txtCep);
         TextFieldUtils.aplicarLimite(txtLogradouro, 80);
         TextFieldUtils.aplicarLimite(txtNumero, 8);
+    }
+
+    private void alimentarComboBox() {
+        ComboBoxUtils.carregarCombo(
+                comboEstado,
+                estadoConsultaService.listarTodos(),
+                Estado::getNome,
+                () -> {
+                    Estado e = new Estado();
+                    e.setId(0L);
+                    e.setNome("Selecione");
+                    return e;
+                }
+        );
     }
 
     @Override
@@ -109,7 +125,7 @@ public class ClienteFormController implements DataReceiver<Cliente> {
 
     @FXML
     private void voltar() {
-        navigator.openViewRootPane("/fxml/cliente/cliente-gerenciar.fxml", rootPane, null);
+        navigator.openViewRootPane(GERENCIAR_PATH, rootPane, null);
     }
 
     private void limparCampos() {

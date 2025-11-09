@@ -37,6 +37,8 @@ public class MainViewController {
         menuCadastrarCliente.setOnAction(e -> open("/fxml/cliente/cliente-form.fxml"));
         menuGerenciarCliente.setOnAction(e -> open("/fxml/cliente/cliente-gerenciar.fxml"));
 
+        menuCadastrarEquipamento.setOnAction(e -> open("/fxml/equipamento/equipamento-form.fxml"));
+        menuGerenciarEquipamento.setOnAction(e -> open("/fxml/equipamento/equipamento-gerenciar.fxml"));
         menuCadastrarTipoEquipamento.setOnAction(e -> open("/fxml/tipoEquipamento/tipoEquipamento-form.fxml"));
         menuGerenciarTipoEquipamento.setOnAction(e -> open("/fxml/tipoEquipamento/tipoEquipamento-gerenciar.fxml"));
 

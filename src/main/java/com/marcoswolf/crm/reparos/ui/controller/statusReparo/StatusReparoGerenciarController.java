@@ -37,7 +37,7 @@ public class StatusReparoGerenciarController {
     @FXML private TableColumn<StatusReparo, String> colNome;
     @FXML private TableColumn<StatusReparo, Number> colTotalReparos;
 
-    public static final String FORM_PATH = "/fxml/statusReparo/statusReparo-form.fxml";
+    private static final String FORM_PATH = "/fxml/statusReparo/statusReparo-form.fxml";
 
     @FXML
     private void initialize() {

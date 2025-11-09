@@ -30,7 +30,7 @@ public class TipoEquipamentoFormController implements DataReceiver<TipoEquipamen
     @FXML private TextField txtNome;
     @FXML private Button btnExcluir;
 
-    public static final String GERENCIAR_PATH = "/fxml/tipoEquipamento/tipoEquipamento-gerenciar.fxml";
+    private static final String GERENCIAR_PATH = "/fxml/tipoEquipamento/tipoEquipamento-gerenciar.fxml";
 
     @FXML
     public void initialize() {

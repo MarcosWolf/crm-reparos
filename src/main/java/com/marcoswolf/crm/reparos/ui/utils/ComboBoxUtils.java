@@ -1,42 +1,50 @@
 package com.marcoswolf.crm.reparos.ui.utils;
 
-import com.marcoswolf.crm.reparos.business.estado.EstadoService;
-import com.marcoswolf.crm.reparos.business.estado.IEstadoConsultaService;
-import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
 import javafx.scene.control.ComboBox;
 import javafx.util.StringConverter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class ComboBoxUtils {
-    public static void carregarEstados(ComboBox<Estado> comboEstado,
-                                       IEstadoConsultaService estadoConsultaService) {
 
-        List<Estado> estados = estadoConsultaService.listarTodos();
-        if (estados == null) {
-            estados = new ArrayList<>();
+    /**
+     * Método genérico para carregar qualquer ComboBox com um item "Selecione" no topo.
+     *
+     * @param combo        O ComboBox a ser carregado
+     * @param itens        Lista de itens vinda do serviço
+     * @param getNomeFunc  Função que retorna o nome/descrição do item
+     * @param criarVazio   Função que cria um item vazio ("Selecione")
+     * @param <T>          Tipo da entidade (Cliente, Estado, TipoEquipamento, etc.)
+     */
+    public static <T> void carregarCombo(
+            ComboBox<T> combo,
+            List<T> itens,
+            Function<T, String> getNomeFunc,
+            Supplier<T> criarVazio
+    ) {
+        if (itens == null) {
+            itens = new ArrayList<>();
         }
 
-        Estado selecione = new Estado();
-        selecione.setId(0L);
-        selecione.setNome("Selecione");
+        T selecione = criarVazio.get();
+        itens.add(0, selecione);
 
-        estados.add(0, selecione);
+        combo.getItems().setAll(itens);
+        combo.getSelectionModel().selectFirst();
 
-        comboEstado.getItems().setAll(estados);
-        comboEstado.getSelectionModel().selectFirst();
-
-        comboEstado.setConverter(new StringConverter<>() {
+        combo.setConverter(new StringConverter<>() {
             @Override
-            public String toString(Estado estado) {
-                return estado == null ? "" : estado.getNome();
+            public String toString(T item) {
+                return item == null ? "" : getNomeFunc.apply(item);
             }
 
             @Override
-            public Estado fromString(String string) {
-                return comboEstado.getItems().stream()
-                        .filter(e -> e.getNome().equals(string))
+            public T fromString(String string) {
+                return combo.getItems().stream()
+                        .filter(e -> getNomeFunc.apply(e).equals(string))
                         .findFirst()
                         .orElse(null);
             }

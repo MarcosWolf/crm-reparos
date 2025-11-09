@@ -1,6 +1,5 @@
 package com.marcoswolf.crm.reparos.ui.navigation;
 
-import com.marcoswolf.crm.reparos.ui.config.SpringFXMLLoader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -11,8 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ViewNavigator {
+
     private final ApplicationContext context;
-    private final SpringFXMLLoader fxmlLoader;
 
     public <T> void openView(String fxmlPath, AnchorPane targetArea, T data) {
         try {

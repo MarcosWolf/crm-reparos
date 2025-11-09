@@ -40,7 +40,7 @@ public class TipoEquipamentoGerenciarController {
     @FXML private TableColumn<TipoEquipamento, Number> colTotalEquipamentos;
     @FXML private TableColumn<TipoEquipamento, Number> colTotalReparos;
 
-    public static final String FORM_PATH = "/fxml/tipoEquipamento/tipoEquipamento-form.fxml";
+    private static final String FORM_PATH = "/fxml/tipoEquipamento/tipoEquipamento-form.fxml";
 
     @FXML
     private void initialize() {

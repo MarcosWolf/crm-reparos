@@ -28,4 +28,22 @@ public class Equipamento {
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+    @Transient
+    public String getNome() {
+        StringBuilder sb = new StringBuilder();
+
+        if (marca != null && !marca.isBlank()) sb.append(marca);
+        if (modelo != null && !modelo.isBlank()) {
+            if (!sb.isEmpty()) sb.append(" ");
+            sb.append(modelo);
+        }
+
+        return sb.isEmpty() ? "Equipamento sem identificação" : sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
 }

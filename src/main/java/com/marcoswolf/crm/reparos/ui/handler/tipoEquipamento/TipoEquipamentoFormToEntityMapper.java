@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TipoEquipamentoFormToEntityMapper {
+
     private final TipoEquipamentoFormMapper delegate;
 
     public TipoEquipamento map(TipoEquipamentoFormData data, TipoEquipamento novoTipoEquipamento) {
@@ -18,6 +19,7 @@ public class TipoEquipamentoFormToEntityMapper {
         if (novoTipoEquipamento != null) {
             tipoEquipamento.setId(novoTipoEquipamento.getId());
         }
+
         return tipoEquipamento;
     }
 }

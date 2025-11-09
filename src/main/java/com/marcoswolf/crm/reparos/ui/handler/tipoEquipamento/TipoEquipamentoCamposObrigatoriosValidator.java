@@ -8,7 +8,6 @@ import static com.marcoswolf.crm.reparos.ui.utils.ValidationUtils.isEmpty;
 
 @Component
 public class TipoEquipamentoCamposObrigatoriosValidator implements TipoEquipamentoValidator {
-
     private final TipoEquipamentoRepository tipoEquipamentoRepository;
 
     public TipoEquipamentoCamposObrigatoriosValidator(TipoEquipamentoRepository tipoEquipamentoRepository) {

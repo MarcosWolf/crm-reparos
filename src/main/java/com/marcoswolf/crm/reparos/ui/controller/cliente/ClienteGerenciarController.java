@@ -45,12 +45,26 @@ public class ClienteGerenciarController {
 
     private boolean filtrosVisiveis = false;
 
+    private static final String FORM_PATH = "/fxml/cliente/cliente-form.fxml";
+
     @FXML
     private void initialize() {
         configurarTabela();
     }
 
     private void configurarTabela() {
+
+        instanciarTabela();
+        alimentarTabela();
+
+        TableUtils.setDoubleClickAction(tabela, itemSelecionado -> {
+            editar(itemSelecionado);
+        });
+
+        centralizarColunas();
+    }
+
+    private void instanciarTabela() {
         colNome.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNome()));
         colTelefone.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTelefone()));
         colCidade.setCellValueFactory(c -> new SimpleStringProperty(
@@ -62,17 +76,9 @@ public class ClienteGerenciarController {
                     endereco != null && endereco.getEstado() != null ? endereco.getEstado().getNome() : ""
             );
         });
-
-        carregarClientesIniciais();
-
-        TableUtils.setDoubleClickAction(tabela, statusSelecionado -> {
-            editar(statusSelecionado);
-        });
-
-        centralizarColunas();
     }
 
-    private void carregarClientesIniciais() {
+    private void alimentarTabela() {
         var clientes = buscarAction.executar("");
         tabela.setItems(FXCollections.observableList(clientes));
     }
@@ -97,8 +103,7 @@ public class ClienteGerenciarController {
 
     @FXML
     public void cadastrar() {
-        navigator.openView("/fxml/cliente/cliente-form.fxml",
-                mainViewController.getContentArea(), null);
+        navigator.openView(FORM_PATH, mainViewController.getContentArea(), null);
     }
 
     @FXML
@@ -125,11 +130,10 @@ public class ClienteGerenciarController {
     @FXML
     public void limparFiltros() {
         limparFiltrosAction.executar(chkPendentes, chkReparosAberto, chkInativos, chkRecentes, txtBuscar, tabela);
-        carregarClientesIniciais();
+        alimentarTabela();
     }
 
     private void editar(Cliente cliente) {
-        navigator.openView("/fxml/cliente/cliente-form.fxml",
-                mainViewController.getContentArea(), cliente);
+        navigator.openView(FORM_PATH, mainViewController.getContentArea(), cliente);
     }
 }

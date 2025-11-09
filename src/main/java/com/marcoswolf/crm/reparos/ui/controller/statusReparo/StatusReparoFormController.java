@@ -30,7 +30,7 @@ public class StatusReparoFormController implements DataReceiver<StatusReparo> {
     @FXML private TextField txtNome;
     @FXML private Button btnExcluir;
 
-    public static final String GERENCIAR_PATH = "/fxml/statusReparo/statusReparo-gerenciar.fxml";
+    private static final String FORM_PATH = "/fxml/statusReparo/statusReparo-form.fxml";
 
     @FXML
     public void initialize() {
@@ -79,7 +79,7 @@ public class StatusReparoFormController implements DataReceiver<StatusReparo> {
 
     @FXML
     private void voltar() {
-        navigator.openViewRootPane(GERENCIAR_PATH, rootPane, null);
+        navigator.openViewRootPane(FORM_PATH, rootPane, null);
     }
 
     private void limparCampos() {

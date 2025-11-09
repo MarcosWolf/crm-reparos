@@ -1,4 +1,4 @@
-package com.marcoswolf.crm.reparos.business;
+package com.marcoswolf.crm.reparos.business.equipamento;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.Equipamento;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.EquipamentoRepository;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class EquipamentoService {
+public class EquipamentoService implements EquipamentoConsultaService, EquipamentoComandoService {
     private final EquipamentoRepository equipamentoRepository;
     private final ReparoRepository reparoRepository;
 
@@ -18,11 +18,15 @@ public class EquipamentoService {
     }
 
     // Create
-    public void salvarEquipamento(Equipamento equipamento) {
+    public void salvar(Equipamento equipamento) {
         equipamentoRepository.saveAndFlush(equipamento);
     }
 
     // Read
+    public List<Equipamento> listarTodos() {
+        return equipamentoRepository.findAll();
+    }
+
     public List<Equipamento> buscarPorNumeroSerie(String numeroSerie) {
         var equipamentos = equipamentoRepository.findByNumeroSerieContainingIgnoreCase(numeroSerie);
 
@@ -34,7 +38,7 @@ public class EquipamentoService {
     }
 
     // Update
-    public Equipamento atualizarEquipamento(Long id, Equipamento novoEquipamento) {
+    public Equipamento atualizar(Long id, Equipamento novoEquipamento) {
         var equipamento = equipamentoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Equipamento não encontrado."));
 
@@ -49,7 +53,7 @@ public class EquipamentoService {
     }
 
     // Delete
-    public void deletarEquipamento(Long id) {
+    public void deletar(Long id) {
         var equipamento = equipamentoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Equipamento não encontrado."));
 

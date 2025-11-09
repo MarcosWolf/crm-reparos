@@ -15,9 +15,19 @@ public interface EquipamentoRepository extends JpaRepository<Equipamento, Long> 
     List<Equipamento> findByTipoEquipamento_Id(Long id);
 
     @Query("""
-    SELECT COUNT(e)
-    FROM Equipamento e
-    WHERE e.tipoEquipamento.id = :tipoId
-""")
+        SELECT COUNT(e)
+        FROM Equipamento e
+        WHERE e.tipoEquipamento.id = :tipoId
+    """)
     Long countByTipoEquipamentoId(@Param("tipoId") Long tipoId);
+
+    @Query("""
+        SELECT e FROM Equipamento e
+        WHERE LOWER(CONCAT(
+            COALESCE(e.marca, ''), ' ',
+            COALESCE(e.modelo, ''), ' ',
+            COALESCE(e.numeroSerie, '')
+        )) LIKE LOWER(CONCAT('%', :termo, '%'))
+    """)
+    List<Equipamento> buscarPorTermo(@Param("termo") String termo);
 }

@@ -1,6 +1,6 @@
 package com.marcoswolf.crm.reparos.controller;
 
-import com.marcoswolf.crm.reparos.business.EquipamentoService;
+import com.marcoswolf.crm.reparos.business.equipamento.EquipamentoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Equipamento;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +17,8 @@ public class EquipamentoController {
 
     // Create
     @PostMapping
-    public ResponseEntity<Equipamento> salvarEquipamento(@RequestBody Equipamento equipamento) {
-        service.salvarEquipamento(equipamento);
+    public ResponseEntity<Equipamento> salvar(@RequestBody Equipamento equipamento) {
+        service.salvar(equipamento);
         return ResponseEntity.ok(equipamento);
     }
 
@@ -31,16 +31,16 @@ public class EquipamentoController {
 
     // Update
     @PutMapping
-    public ResponseEntity<Equipamento> atualizarEquipamento(@RequestParam Long id, @RequestBody Equipamento equipamento) {
-        Equipamento novoEquipamento = service.atualizarEquipamento(id, equipamento);
+    public ResponseEntity<Equipamento> atualizar(@RequestParam Long id, @RequestBody Equipamento equipamento) {
+        Equipamento novoEquipamento = service.atualizar(id, equipamento);
         return ResponseEntity.ok(novoEquipamento);
     }
 
     // Delete
     @DeleteMapping
-    public ResponseEntity<String> deletarEquipamento(@RequestParam Long id) {
+    public ResponseEntity<String> deletar(@RequestParam Long id) {
         try {
-            service.deletarEquipamento(id);
+            service.deletar(id);
             return ResponseEntity.ok("Equipamento deletado com sucesso.");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
