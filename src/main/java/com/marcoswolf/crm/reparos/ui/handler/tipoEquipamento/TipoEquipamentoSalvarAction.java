@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TipoEquipamentoSalvarAction implements TipoEquipamentoAction {
+    private final TipoEquipamentoFormNormalizer normalizer;
     private final ITipoEquipamentoComandoService tipoEquipamentoComandoService;
     private final TipoEquipamentoFormToEntityMapper mapper;
     private final TipoEquipamentoValidator validator;
@@ -17,9 +18,10 @@ public class TipoEquipamentoSalvarAction implements TipoEquipamentoAction {
     @Override
     public boolean execute(TipoEquipamento novoTipoEquipamento, TipoEquipamentoFormData data) {
         try {
-            validator.validar(data);
+            TipoEquipamentoFormData normalized = normalizer.normalize(data);
+            validator.validar(normalized, novoTipoEquipamento);
 
-            TipoEquipamento tipoEquipamento = mapper.map(data, novoTipoEquipamento);
+            TipoEquipamento tipoEquipamento = mapper.map(normalized, novoTipoEquipamento);
             tipoEquipamentoComandoService.salvarTipoEquipamento(tipoEquipamento);
 
             alertService.info("Sucesso", "Tipo de equipamento salvo com sucesso!");

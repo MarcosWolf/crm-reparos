@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ClienteSalvarAction implements ClienteAction {
+    private final ClienteFormNormalizer normalizer;
     private final IClienteComandoService clienteComandoService;
     private final ClienteFormToEntityMapper mapper;
     private final ClienteValidator validator;
@@ -18,9 +19,10 @@ public class ClienteSalvarAction implements ClienteAction {
     @Override
     public boolean execute(Cliente novoCliente, ClienteFormData data) {
         try {
-            validator.validar(data);
+            ClienteFormData normalized = normalizer.normalize(data);
+            validator.validar(normalized, novoCliente);
 
-            Cliente cliente = mapper.map(data, novoCliente);
+            Cliente cliente = mapper.map(normalized, novoCliente);
             clienteComandoService.salvarCliente(cliente);
 
             alertService.info("Sucesso", "Cliente salvo com sucesso!");

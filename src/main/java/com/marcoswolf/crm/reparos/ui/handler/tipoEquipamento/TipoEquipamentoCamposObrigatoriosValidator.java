@@ -1,5 +1,6 @@
 package com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento;
 
+import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.TipoEquipamentoRepository;
 import org.springframework.stereotype.Component;
 
@@ -15,12 +16,14 @@ public class TipoEquipamentoCamposObrigatoriosValidator implements TipoEquipamen
     }
 
     @Override
-    public void validar(TipoEquipamentoFormData data) {
+    public void validar(TipoEquipamentoFormData data, TipoEquipamento novoTipoEquipamento) {
         if (isEmpty(data.nome())) {
             throw new IllegalArgumentException("O campo Nome é obrigatório.");
         }
 
-        if (!isEmpty(data.nome()) && tipoEquipamentoRepository.existsByNome(data.nome())) {
+        Long id = novoTipoEquipamento != null ? novoTipoEquipamento.getId() : null;
+
+        if (!isEmpty(data.nome()) && tipoEquipamentoRepository.existsByNomeAndNotId(data.nome(), id)) {
             throw new IllegalArgumentException("Já existe um tipo de equipamento cadastrado com este nome.");
         }
     }

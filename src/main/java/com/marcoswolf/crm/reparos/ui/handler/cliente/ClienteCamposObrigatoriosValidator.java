@@ -1,5 +1,6 @@
 package com.marcoswolf.crm.reparos.ui.handler.cliente;
 
+import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
 import static com.marcoswolf.crm.reparos.ui.utils.ValidationUtils.isEmpty;
 
@@ -16,7 +17,7 @@ public class ClienteCamposObrigatoriosValidator implements ClienteValidator {
     }
 
     @Override
-    public void validar(ClienteFormData data) {
+    public void validar(ClienteFormData data, Cliente novoCliente) {
         if (isEmpty(data.nome())) {
             throw new IllegalArgumentException("O campo Nome é obrigatório.");
         }
@@ -25,11 +26,13 @@ public class ClienteCamposObrigatoriosValidator implements ClienteValidator {
             throw new IllegalArgumentException("O campo Telefone é obrigatório.");
         }
 
-        if (clienteRepository.existsByTelefone(data.telefone())) {
+        Long id = novoCliente != null ? novoCliente.getId() : null;
+
+        if (clienteRepository.existsByTelefoneAndNotId(data.telefone(), id)) {
             throw new IllegalArgumentException("Já existe um cliente cadastrado com este telefone.");
         }
 
-        if (!isEmpty(data.email()) && clienteRepository.existsByEmail(data.email())) {
+        if (!isEmpty(data.email()) && clienteRepository.existsByEmailAndNotId(data.email(), id)) {
             throw new IllegalArgumentException("Já existe um cliente cadastrado com este e-mail.");
         }
 
