@@ -7,6 +7,7 @@ import com.marcoswolf.crm.reparos.ui.config.SpringFXMLLoader;
 import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
 import com.marcoswolf.crm.reparos.ui.handler.statusReparo.BuscarAction;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
+import com.marcoswolf.crm.reparos.ui.utils.TableUtils;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -51,15 +52,11 @@ public class GerenciarController {
 
         carregarStatusReparos();
 
-        tabela.setRowFactory(tv -> {
-            TableRow<StatusReparo> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                    StatusReparo statusSelecionado = row.getItem();
-                }
-            });
-            return row;
+        TableUtils.setDoubleClickAction(tabela, statusSelecionado -> {
+            editar(statusSelecionado);
         });
+
+        centralizarColunas();
     }
 
     @FXML
@@ -75,6 +72,10 @@ public class GerenciarController {
         });
 
         tabela.setItems(FXCollections.observableList(statusReparos));
+    }
+
+    private void centralizarColunas() {
+        TableUtils.centralizarColuna(colTotalReparos);
     }
 
     @FXML

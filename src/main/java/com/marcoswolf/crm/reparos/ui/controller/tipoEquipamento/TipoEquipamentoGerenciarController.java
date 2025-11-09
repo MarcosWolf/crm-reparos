@@ -6,6 +6,7 @@ import com.marcoswolf.crm.reparos.ui.config.SpringFXMLLoader;
 import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
 import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.TipoEquipamentoBuscarAction;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
+import com.marcoswolf.crm.reparos.ui.utils.TableUtils;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -66,6 +67,8 @@ public class TipoEquipamentoGerenciarController {
             });
             return row;
         });
+
+        centralizarColunas();
     }
 
     @FXML
@@ -83,6 +86,12 @@ public class TipoEquipamentoGerenciarController {
         });
 
         tabelaTipoEquipamento.setItems(FXCollections.observableList(tipoEquipamentos));
+    }
+
+    private void centralizarColunas() {
+        TableUtils.centralizarColuna(colTotalClientes);
+        TableUtils.centralizarColuna(colTotalEquipamentos);
+        TableUtils.centralizarColuna(colTotalReparos);
     }
 
     @FXML

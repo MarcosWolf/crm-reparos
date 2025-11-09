@@ -5,6 +5,7 @@ import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
 import com.marcoswolf.crm.reparos.ui.handler.cliente.*;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
+import com.marcoswolf.crm.reparos.ui.utils.TableUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -49,6 +50,7 @@ public class ClienteGerenciarController {
         configurarTabela();
         carregarClientesIniciais();
         configurarDuploClique();
+        centralizarColunas();
     }
 
     private void configurarTabela() {
@@ -80,6 +82,12 @@ public class ClienteGerenciarController {
     private void carregarClientesIniciais() {
         var clientes = buscarAction.executar("");
         tabelaClientes.setItems(FXCollections.observableList(clientes));
+    }
+
+    private void centralizarColunas() {
+        TableUtils.centralizarColuna(colCidade);
+        TableUtils.centralizarColuna(colEstado);
+        TableUtils.centralizarColuna(colTelefone);
     }
 
     @FXML
