@@ -1,8 +1,7 @@
 package com.marcoswolf.crm.reparos.business.tipoEquipamento.filtro;
 
-import com.marcoswolf.crm.reparos.business.cliente.filtro.strategy.*;
 import com.marcoswolf.crm.reparos.business.tipoEquipamento.filtro.strategy.FiltroNome;
-import com.marcoswolf.crm.reparos.business.tipoEquipamento.filtro.strategy.TipoEquipamentoFiltroStrategy;
+import com.marcoswolf.crm.reparos.business.tipoEquipamento.filtro.strategy.ITipoEquipamentoFiltroStrategy;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.TipoEquipamentoRepository;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class TipoEquipamentoFiltroService implements ITipoEquipamentoFiltroServi
     }
 
     public List<TipoEquipamento> aplicarFiltros(List<TipoEquipamento> tipoEquipamentos, TipoEquipamentoFiltro filtro) {
-        var strategies = new ArrayList<TipoEquipamentoFiltroStrategy>();
+        var strategies = new ArrayList<ITipoEquipamentoFiltroStrategy>();
 
         strategies.add(new FiltroNome(filtro.getNome()));
 

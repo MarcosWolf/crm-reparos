@@ -1,4 +1,4 @@
-package com.marcoswolf.crm.reparos.business;
+package com.marcoswolf.crm.reparos.business.statusReparo;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.StatusReparo;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.ReparoRepository;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StatusReparoService {
+public class StatusReparoService implements StatusReparoConsultaService, StatusReparoComandoService {
     private final StatusReparoRepository statusReparoRepository;
     private final ReparoRepository reparoRepository;
 
@@ -18,11 +18,15 @@ public class StatusReparoService {
     }
 
     // Create
-    public void salvarStatusReparo(StatusReparo statusReparo) {
+    public void salvar(StatusReparo statusReparo) {
         statusReparoRepository.saveAndFlush(statusReparo);
     }
 
     // Read
+    public List<StatusReparo> listarTodos() {
+        return statusReparoRepository.findAll();
+    }
+
     public List<StatusReparo> buscarPorNome(String nome) {
         var statusReparos = statusReparoRepository.findByNomeContainingIgnoreCase(nome);
 
@@ -33,8 +37,12 @@ public class StatusReparoService {
         return statusReparos;
     }
 
+    public Long contarReparosPorStatusReparo(Long tipoId) {
+        return reparoRepository.countByTipoEquipamentoId(tipoId);
+    }
+
     // Update
-    public StatusReparo atualizarStatusReparo(Long id, StatusReparo novoStatusReparo) {
+    public StatusReparo atualizar(Long id, StatusReparo novoStatusReparo) {
         var statusReparo = statusReparoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Status de Reparo não encontrado."));
 
@@ -44,7 +52,7 @@ public class StatusReparoService {
     }
 
     // Delete
-    public void deletarStatusReparo(Long id) {
+    public void deletar(Long id) {
         var statusReparo = statusReparoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Status de Reparo não encontrado."));
 

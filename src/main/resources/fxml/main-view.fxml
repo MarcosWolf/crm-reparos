@@ -76,8 +76,8 @@
                   <MenuItem mnemonicParsing="false" text="Cadastrar Reparo" />
                   <MenuItem mnemonicParsing="false" text="Gerenciar Reparos" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Cadastrar Status de Reparo" />
-                  <MenuItem mnemonicParsing="false" text="Gerenciar Status de Reparo" />
+                  <MenuItem fx:id="menuCadastrarStatusReparo" mnemonicParsing="false" text="Cadastrar Status de Reparo" />
+                  <MenuItem fx:id="menuGerenciarStatusReparo" mnemonicParsing="false" text="Gerenciar Status de Reparo" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Financeiro">

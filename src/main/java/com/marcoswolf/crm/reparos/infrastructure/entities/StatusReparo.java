@@ -19,4 +19,7 @@ public class StatusReparo {
 
     @Column(nullable = false, unique = true)
     private String nome;
+
+    @Transient
+    private Long totalReparos;
 }

@@ -4,7 +4,6 @@ import com.marcoswolf.crm.reparos.business.tipoEquipamento.TipoEquipamentoServic
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.ui.config.SpringFXMLLoader;
 import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
-import com.marcoswolf.crm.reparos.ui.handler.cliente.ClienteBuscarAction;
 import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.TipoEquipamentoBuscarAction;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import javafx.beans.property.SimpleLongProperty;
@@ -27,7 +26,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TipoEquipamentoGerenciarController {
     private final TipoEquipamentoService tipoEquipamentoService;
-    private final SpringFXMLLoader fxmlLoader;
     private final MainViewController mainViewController;
     private final ViewNavigator navigator;
 
@@ -63,7 +61,6 @@ public class TipoEquipamentoGerenciarController {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     TipoEquipamento tipoEquipamentoSelecionado = row.getItem();
-                    System.out.println("Editando o usuário " + row.getItem());
                     abrirTelaEdicao(tipoEquipamentoSelecionado);
                 }
             });
@@ -96,7 +93,7 @@ public class TipoEquipamentoGerenciarController {
     }
 
     @FXML
-    public void onNovo(ActionEvent actionEvent) {
+    public void onNovo() {
         navigator.openView("/fxml/tipoEquipamento/tipoEquipamento-form.fxml",
                 mainViewController.getContentArea(),
                 null);

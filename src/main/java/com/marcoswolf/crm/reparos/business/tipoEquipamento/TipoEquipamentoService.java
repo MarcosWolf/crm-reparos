@@ -1,9 +1,6 @@
 package com.marcoswolf.crm.reparos.business.tipoEquipamento;
 
 import com.marcoswolf.crm.reparos.business.cliente.filtro.strategy.*;
-import com.marcoswolf.crm.reparos.business.tipoEquipamento.filtro.TipoEquipamentoFiltro;
-import com.marcoswolf.crm.reparos.business.tipoEquipamento.filtro.strategy.FiltroNome;
-import com.marcoswolf.crm.reparos.business.tipoEquipamento.filtro.strategy.TipoEquipamentoFiltroStrategy;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.ClienteRepository;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.EquipamentoRepository;
@@ -11,8 +8,6 @@ import com.marcoswolf.crm.reparos.infrastructure.repositories.ReparoRepository;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.TipoEquipamentoRepository;
 import org.springframework.stereotype.Service;
 
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

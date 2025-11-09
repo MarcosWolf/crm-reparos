@@ -1,11 +1,10 @@
 package com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento;
 
-import com.marcoswolf.crm.reparos.ui.handler.shared.BaseFormNormalizer;
-import com.marcoswolf.crm.reparos.ui.handler.shared.FormNormalizer;
+import com.marcoswolf.crm.reparos.ui.handler.shared.IFormNormalizer;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TipoEquipamentoFormNormalizer implements FormNormalizer<TipoEquipamentoFormData> {
+public class TipoEquipamentoFormNormalizer implements IFormNormalizer<TipoEquipamentoFormData> {
 
     @Override
     public TipoEquipamentoFormData normalize(TipoEquipamentoFormData data) {

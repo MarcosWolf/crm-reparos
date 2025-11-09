@@ -1,8 +1,6 @@
 package com.marcoswolf.crm.reparos.ui.controller.tipoEquipamento;
 
-import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
-import com.marcoswolf.crm.reparos.ui.handler.cliente.ClienteFormData;
 import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.TipoEquipamentoExcluirAction;
 import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.TipoEquipamentoFormData;
 import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.TipoEquipamentoSalvarAction;
@@ -17,8 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import static com.marcoswolf.crm.reparos.ui.utils.ParseUtils.parseInteger;
 
 @Component
 @Scope("prototype")

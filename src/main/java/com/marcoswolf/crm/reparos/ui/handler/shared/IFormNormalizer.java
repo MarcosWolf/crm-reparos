@@ -1,5 +1,5 @@
 package com.marcoswolf.crm.reparos.ui.handler.shared;
 
-public interface FormNormalizer<T extends FormData> {
+public interface IFormNormalizer<T extends IFormData> {
     T normalize(T data);
 }

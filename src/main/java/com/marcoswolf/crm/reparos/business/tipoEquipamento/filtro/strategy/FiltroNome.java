@@ -2,7 +2,7 @@ package com.marcoswolf.crm.reparos.business.tipoEquipamento.filtro.strategy;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 
-public class FiltroNome implements TipoEquipamentoFiltroStrategy {
+public class FiltroNome implements ITipoEquipamentoFiltroStrategy {
     private final String nome;
 
     public FiltroNome(String nome) {

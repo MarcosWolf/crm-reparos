@@ -26,6 +26,12 @@ public class MainViewController {
     @FXML private MenuItem menuCadastrarTipoEquipamento;
     @FXML private MenuItem menuGerenciarTipoEquipamento;
 
+    // Reparo
+    //@FXML private MenuItem menuCadastrarReparo;
+    //@FXML private MenuItem menuGerenciarReparo;
+    @FXML private MenuItem menuCadastrarStatusReparo;
+    @FXML private MenuItem menuGerenciarStatusReparo;
+
     @FXML
     public void initialize() {
         menuCadastrarCliente.setOnAction(e -> open("/fxml/cliente/cliente-form.fxml"));
@@ -33,6 +39,9 @@ public class MainViewController {
 
         menuCadastrarTipoEquipamento.setOnAction(e -> open("/fxml/tipoEquipamento/tipoEquipamento-form.fxml"));
         menuGerenciarTipoEquipamento.setOnAction(e -> open("/fxml/tipoEquipamento/tipoEquipamento-gerenciar.fxml"));
+
+        menuCadastrarStatusReparo.setOnAction(e -> open("/fxml/statusReparo/statusReparo-form.fxml"));
+        menuGerenciarStatusReparo.setOnAction(e -> open("/fxml/statusReparo/statusReparo-gerenciar.fxml"));
     }
 
     private void open(String fxmlPath) {

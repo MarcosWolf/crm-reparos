@@ -1,7 +1,7 @@
 package com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento;
 
-import com.marcoswolf.crm.reparos.ui.handler.shared.FormData;
+import com.marcoswolf.crm.reparos.ui.handler.shared.IFormData;
 
 public record TipoEquipamentoFormData (
     String nome
-) implements FormData {}
+) implements IFormData {}

@@ -18,7 +18,7 @@ public class TipoEquipamentoCamposObrigatoriosValidator implements TipoEquipamen
     @Override
     public void validar(TipoEquipamentoFormData data, TipoEquipamento novoTipoEquipamento) {
         if (isEmpty(data.nome())) {
-            throw new IllegalArgumentException("O campo Nome é obrigatório.");
+            throw new IllegalArgumentException("O campo nome é obrigatório.");
         }
 
         Long id = novoTipoEquipamento != null ? novoTipoEquipamento.getId() : null;

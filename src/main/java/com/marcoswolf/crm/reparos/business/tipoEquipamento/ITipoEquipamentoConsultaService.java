@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface ITipoEquipamentoConsultaService {
     List<TipoEquipamento> listarTodos();
-    //List<TipoEquipamento> filtrarTipoEquipamentos(TipoEquipamentoFiltro tipoEquipamentoFiltro);
 }

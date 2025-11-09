@@ -1,6 +1,6 @@
 package com.marcoswolf.crm.reparos.ui.handler.shared;
 
-public abstract class BaseFormNormalizer<T extends FormData> implements FormNormalizer<T> {
+public abstract class BaseFormNormalizer<T extends IFormData> implements IFormNormalizer<T> {
     protected String trim(String value) {
         return value == null ? null : value.trim();
     }
