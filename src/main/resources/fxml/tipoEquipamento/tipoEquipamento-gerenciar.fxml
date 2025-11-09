@@ -64,10 +64,10 @@
 
                 <TableView fx:id="tabelaTipoEquipamento" prefHeight="380">
                     <columns>
-                        <TableColumn fx:id="colNome" text="Nome" />
-                        <TableColumn fx:id="colClientes" text="Clientes" />
-                        <TableColumn fx:id="colEquipamentos"  text="Equipamentos" />
-                        <TableColumn fx:id="colReparos" text="Reparos" />
+                        <TableColumn fx:id="colNome" prefWidth="250" text="Nome" />
+                        <TableColumn fx:id="colTotalClientes" prefWidth="160" text="Clientes" />
+                        <TableColumn fx:id="colTotalEquipamentos" prefWidth="160" text="Equipamentos" />
+                        <TableColumn fx:id="colTotalReparos" prefWidth="160" text="Reparos" />
                     </columns>
                 </TableView>
             </VBox>

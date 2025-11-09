@@ -7,6 +7,8 @@ import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
 import com.marcoswolf.crm.reparos.ui.handler.cliente.ClienteBuscarAction;
 import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.TipoEquipamentoBuscarAction;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -34,11 +37,24 @@ public class TipoEquipamentoGerenciarController {
 
     @FXML private TextField txtBuscar;
     @FXML private TableView<TipoEquipamento> tabelaTipoEquipamento;
+
     @FXML private TableColumn<TipoEquipamento, String> colNome;
+    @FXML private TableColumn<TipoEquipamento, Number> colTotalClientes;
+    @FXML private TableColumn<TipoEquipamento, Number> colTotalEquipamentos;
+    @FXML private TableColumn<TipoEquipamento, Number> colTotalReparos;
 
     @FXML
     private void initialize() {
-        colNome.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getNome()));
+        colNome.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNome()));
+        colTotalClientes.setCellValueFactory(c -> new SimpleLongProperty(
+                Optional.ofNullable(c.getValue().getTotalClientes()).orElse(0L)
+        ));
+        colTotalEquipamentos.setCellValueFactory(c -> new SimpleLongProperty(
+                Optional.ofNullable(c.getValue().getTotalEquipamentos()).orElse(0L)
+        ));
+        colTotalReparos.setCellValueFactory(c -> new SimpleLongProperty(
+                Optional.ofNullable(c.getValue().getTotalReparos()).orElse(0L)
+        ));
 
         carregarTipoEquipamentos();
 
@@ -62,6 +78,13 @@ public class TipoEquipamentoGerenciarController {
 
     private void carregarTipoEquipamentos() {
         List<TipoEquipamento> tipoEquipamentos = tipoEquipamentoService.listarTodos();
+
+        tipoEquipamentos.forEach(t -> {
+            t.setTotalClientes(tipoEquipamentoService.contarClientesPorTipo(t.getId()));
+            t.setTotalEquipamentos(tipoEquipamentoService.contarEquipamentosPorTipo(t.getId()));
+            t.setTotalReparos(tipoEquipamentoService.contarReparosPorTipo(t.getId()));
+        });
+
         tabelaTipoEquipamento.setItems(FXCollections.observableList(tipoEquipamentos));
     }
 

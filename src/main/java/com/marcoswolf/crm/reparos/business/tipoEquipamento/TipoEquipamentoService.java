@@ -39,6 +39,18 @@ public class TipoEquipamentoService implements ITipoEquipamentoConsultaService, 
         return tipoEquipamentoRepository.findAll();
     }
 
+    public Long contarClientesPorTipo(Long tipoId) {
+        return clienteRepository.countByTipoEquipamentoId(tipoId);
+    }
+
+    public Long contarEquipamentosPorTipo(Long tipoId) {
+        return equipamentoRepository.countByTipoEquipamentoId(tipoId);
+    }
+
+    public Long contarReparosPorTipo(Long tipoId) {
+        return reparoRepository.countByTipoEquipamentoId(tipoId);
+    }
+
     // Update
     public TipoEquipamento atualizarTipoEquipamento(Long id, TipoEquipamento novoTipoEquipamento) {
         var tipoEquipamento = tipoEquipamentoRepository.findById(id)

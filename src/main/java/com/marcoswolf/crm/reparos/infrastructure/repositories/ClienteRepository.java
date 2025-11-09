@@ -30,4 +30,11 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     """)
     boolean existsByEmailAndNotId(@Param("email") String email, @Param("id") Long id);
 
+    // Tipo Equipamento
+    @Query("""
+    SELECT COUNT(DISTINCT e.cliente)
+    FROM Equipamento e
+    WHERE e.tipoEquipamento.id = :tipoId
+""")
+    Long countByTipoEquipamentoId(@Param("tipoId") Long tipoId);
 }

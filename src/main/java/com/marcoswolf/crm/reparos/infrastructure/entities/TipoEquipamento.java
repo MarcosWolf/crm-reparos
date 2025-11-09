@@ -19,4 +19,13 @@ public class TipoEquipamento {
 
     @Column(nullable = false, unique = true)
     private String nome;
+
+    @Transient
+    private Long totalClientes;
+
+    @Transient
+    private Long totalEquipamentos;
+
+    @Transient
+    private Long totalReparos;
 }
