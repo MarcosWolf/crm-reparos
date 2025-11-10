@@ -25,7 +25,6 @@ public class Pagamento {
     private Double valorServico;
     private Double desconto;
     private LocalDate dataPagamento;
-    private Boolean pago;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "pagamento_id")

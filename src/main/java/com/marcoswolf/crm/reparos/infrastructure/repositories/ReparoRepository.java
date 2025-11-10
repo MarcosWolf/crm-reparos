@@ -13,8 +13,7 @@ public interface ReparoRepository extends JpaRepository<Reparo, Long> {
     List<Reparo> findByStatus_NomeContainingIgnoreCase(String nomeStatus);
     // Cliente
     List<Reparo> findByEquipamento_Cliente_Id(Long id);
-    boolean existsByEquipamento_Cliente_IdAndPagamento_PagoFalse(Long clienteId);
-    boolean existsByEquipamento_Cliente_IdAndConcluidoFalse(Long clientId);
+    boolean existsByEquipamento_Cliente_IdAndPagamento_DataPagamentoIsNull(Long clienteId);
     boolean existsByEquipamento_Cliente_IdAndDataEntradaAfter(Long clientId, LocalDate dataEntrada);
     // Equipamento
     List<Reparo> findByEquipamento_Id(Long id);

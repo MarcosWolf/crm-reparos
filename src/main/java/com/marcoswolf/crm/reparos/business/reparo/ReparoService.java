@@ -1,4 +1,4 @@
-package com.marcoswolf.crm.reparos.business;
+package com.marcoswolf.crm.reparos.business.reparo;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.Pagamento;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Reparo;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ReparoService {
+public class ReparoService implements ReparoConsultaService, ReparoComandoService {
     private final ReparoRepository reparoRepository;
 
     public ReparoService(ReparoRepository reparoRepository) {
@@ -17,23 +17,17 @@ public class ReparoService {
     }
 
     // Create
-    public void salvarReparo(Reparo reparo) {
+    public void salvar(Reparo reparo) {
         reparoRepository.saveAndFlush(reparo);
     }
 
     // Read
-    public List<Reparo> buscarPorStatus(String status) {
-        var reparos = reparoRepository.findByStatus_NomeContainingIgnoreCase(status);
-
-        if (reparos.isEmpty()) {
-            throw new RuntimeException("Reparo não encontrado.");
-        }
-
-        return reparos;
+    public List<Reparo> listarTodos() {
+        return reparoRepository.findAll();
     }
 
     // Update
-    public Reparo atualizarReparo(Long id, Reparo novoReparo) {
+    public Reparo atualizar(Long id, Reparo novoReparo) {
         var reparo = reparoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reparo não encontrado."));
 
@@ -57,7 +51,6 @@ public class ReparoService {
             pagamento.setValorServico(novoPagamento.getValorServico());
             pagamento.setDesconto(novoPagamento.getDesconto());
             pagamento.setDataPagamento(novoPagamento.getDataPagamento());
-            pagamento.setPago(novoPagamento.getPago());
 
             if (pagamento.getPecas() == null) {
                 pagamento.setPecas(new ArrayList<>());
@@ -74,7 +67,7 @@ public class ReparoService {
     }
 
     // Delete
-    public void deletarReparo(Long id) {
+    public void deletar(Long id) {
         var reparo = reparoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reparo não encontrado."));
 

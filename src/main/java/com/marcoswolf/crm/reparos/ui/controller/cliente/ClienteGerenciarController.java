@@ -40,7 +40,6 @@ public class ClienteGerenciarController {
     @FXML private TableColumn<Cliente, String> colEstado;
     @FXML private CheckBox chkPendentes;
     @FXML private CheckBox chkInativos;
-    @FXML private CheckBox chkReparosAberto;
     @FXML private CheckBox chkRecentes;
 
     private boolean filtrosVisiveis = false;
@@ -116,7 +115,6 @@ public class ClienteGerenciarController {
         var filtro = new ClienteFiltroDTO(
                 txtBuscar.getText(),
                 chkPendentes.isSelected(),
-                chkReparosAberto.isSelected(),
                 chkInativos.isSelected(),
                 chkRecentes.isSelected(),
                 LocalDate.now().minusDays(30)
@@ -129,7 +127,7 @@ public class ClienteGerenciarController {
 
     @FXML
     public void limparFiltros() {
-        limparFiltrosAction.executar(chkPendentes, chkReparosAberto, chkInativos, chkRecentes, txtBuscar, tabela);
+        limparFiltrosAction.executar(chkPendentes, chkInativos, chkRecentes, txtBuscar, tabela);
         alimentarTabela();
     }
 

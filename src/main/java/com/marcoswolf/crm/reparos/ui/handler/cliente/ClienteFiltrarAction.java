@@ -30,7 +30,6 @@ public class ClienteFiltrarAction {
         ClienteFiltro filtro = new ClienteFiltro();
         filtro.setNome(dto.nome());
         filtro.setPendentes(dto.pendentes());
-        filtro.setComReparos(dto.comReparos());
         filtro.setInativos(dto.inativos());
         filtro.setRecentes(dto.recentes());
         filtro.setDataDesde(dto.dataDesde());

@@ -52,8 +52,7 @@
                     <Label text="Filtros Avançados" style="-fx-font-weight: bold; -fx-text-fill: #333;"/>
                     <CheckBox fx:id="chkPendentes" text="Clientes com pagamentos pendentes"/>
                     <CheckBox fx:id="chkInativos" text="Clientes inativos"/>
-                    <CheckBox fx:id="chkRecentes" text="Cadastrados nos últimos 30 dias"/>
-                    <CheckBox fx:id="chkReparosAberto" text="Com reparos em aberto"/>
+                    <CheckBox fx:id="chkRecentes" text="Reparos nos últimos 30 dias"/>
                     <HBox alignment="CENTER_RIGHT" spacing="8">
                         <Button text="Limpar" onAction="#limparFiltros"
                                 style="-fx-background-color: #f0f0f0; -fx-text-fill: #333;"/>

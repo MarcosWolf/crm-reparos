@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TipoEquipamentoFormToEntityMapper {
-
     private final TipoEquipamentoFormMapper delegate;
 
     public TipoEquipamento map(TipoEquipamentoFormData data, TipoEquipamento novoTipoEquipamento) {

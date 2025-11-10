@@ -17,14 +17,12 @@ public class ClienteLimparFiltrosAction {
     private final AlertService alertService;
 
     public void executar(CheckBox chkPendentes,
-                         CheckBox chkReparosAberto,
                          CheckBox chkRecentes,
                          CheckBox chkInativos,
                          TextField txtBuscar,
                          TableView<Cliente> tabelaClientes) {
         try {
             chkPendentes.setSelected(false);
-            chkReparosAberto.setSelected(false);
             chkRecentes.setSelected(false);
             chkInativos.setSelected(false);
             txtBuscar.clear();

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EquipamentoFormNormalizer implements IFormNormalizer<EquipamentoFormData> {
-
     @Override
     public EquipamentoFormData normalize(EquipamentoFormData data) {
         if (data == null) return null;

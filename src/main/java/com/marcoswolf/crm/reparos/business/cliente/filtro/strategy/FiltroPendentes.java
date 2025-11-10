@@ -12,6 +12,6 @@ public class FiltroPendentes implements ClienteFiltroStrategy {
 
     @Override
     public boolean aplicar(Cliente cliente) {
-        return reparoRepository.existsByEquipamento_Cliente_IdAndPagamento_PagoFalse(cliente.getId());
+        return reparoRepository.existsByEquipamento_Cliente_IdAndPagamento_DataPagamentoIsNull(cliente.getId());
     }
 }

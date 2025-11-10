@@ -30,7 +30,6 @@ public class ClienteFiltroService implements IClienteFiltroService {
         strategies.add(new FiltroNome(filtro.getNome()));
 
         if (filtro.isPendentes()) strategies.add(new FiltroPendentes(reparoRepository));
-        if (filtro.isComReparos()) strategies.add(new FiltroComReparos(reparoRepository));
         if (filtro.isInativos()) strategies.add(new FiltroInativos(reparoRepository));
         if (filtro.isRecentes()) strategies.add(new FiltroRecentes(reparoRepository));
 
