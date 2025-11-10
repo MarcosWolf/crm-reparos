@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @Table(name = "reparo")
 @Getter
 @Setter
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -37,4 +36,17 @@ public class Reparo {
     @JoinColumn(name = "pagamento_id")
     @JsonManagedReference
     private Pagamento pagamento;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Reparo)) return false;
+        Reparo that = (Reparo) o;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }

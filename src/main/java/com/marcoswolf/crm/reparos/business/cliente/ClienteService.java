@@ -3,6 +3,7 @@ package com.marcoswolf.crm.reparos.business.cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Endereco;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.ClienteRepository;
+import com.marcoswolf.crm.reparos.infrastructure.repositories.EquipamentoRepository;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.ReparoRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,12 @@ import java.util.List;
 public class ClienteService implements IClienteConsultaService, IClienteComandoService {
     private final ClienteRepository clienteRepository;
     private final ReparoRepository reparoRepository;
+    private final EquipamentoRepository equipamentoRepository;
 
-    public ClienteService(ClienteRepository clienteRepository, ReparoRepository reparoRepository) {
+    public ClienteService(ClienteRepository clienteRepository, ReparoRepository reparoRepository, EquipamentoRepository equipamentoRepository) {
         this.clienteRepository = clienteRepository;
         this.reparoRepository = reparoRepository;
+        this.equipamentoRepository = equipamentoRepository;
     }
 
     // Create
@@ -62,9 +65,14 @@ public class ClienteService implements IClienteConsultaService, IClienteComandoS
             .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
 
         boolean possuiReparos = !reparoRepository.findByEquipamento_Cliente_Id(id).isEmpty();
+        boolean possuiEquipamentos = equipamentoRepository.existsByClienteId(id);
 
         if (possuiReparos) {
             throw new RuntimeException("Não é possível excluir o cliente: existe reparo associado.");
+        }
+
+        if (possuiEquipamentos) {
+            throw new RuntimeException("Não é possível excluir o cliente: existem equipamentos vinculados.");
         }
 
         clienteRepository.delete(cliente);

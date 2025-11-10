@@ -68,6 +68,7 @@ public class ReparoFormController implements DataReceiver<Reparo> {
         configurarTabelaPecas();
         configurarRecalculo();
         configurarListenerCliente();
+        configurarListenerEquipamento();
     }
 
     private void configurarCampos() {
@@ -120,15 +121,21 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     private void configurarAcaoComboCliente() {
         comboCliente.valueProperty().addListener((obs, antigo, novoCliente) -> {
             if (novoCliente == null || novoCliente.getId() == 0) {
-                comboEquipamento.getItems().setAll(); // limpa
+                comboEquipamento.getItems().clear();
                 comboEquipamento.getSelectionModel().clearSelection();
                 comboEquipamento.setDisable(true);
                 return;
             }
 
-            comboEquipamento.setDisable(false);
-
             var equipamentos = equipamentoConsultaService.listarPorClienteId(novoCliente.getId());
+
+            if (equipamentos == null || equipamentos.isEmpty()) {
+                comboEquipamento.getItems().clear();
+                comboEquipamento.setDisable(true);
+                return;
+            }
+
+            comboEquipamento.setDisable(false);
             ComboBoxUtils.carregarCombo(
                     comboEquipamento,
                     equipamentos,
@@ -140,7 +147,6 @@ public class ReparoFormController implements DataReceiver<Reparo> {
                         return e;
                     }
             );
-
             comboEquipamento.getSelectionModel().selectFirst();
         });
     }
@@ -162,6 +168,16 @@ public class ReparoFormController implements DataReceiver<Reparo> {
                 );
             } else {
                 comboEquipamento.getItems().clear();
+            }
+        });
+    }
+
+    private void configurarListenerEquipamento() {
+        comboEquipamento.valueProperty().addListener((obs, antigo, novoEquipamento) -> {
+            if (novoEquipamento == null || novoEquipamento.getId() == null || novoEquipamento.getId() == 0) {
+                txtNumeroSerie.clear();
+            } else {
+                txtNumeroSerie.setText(novoEquipamento.getNumeroSerie() != null ? novoEquipamento.getNumeroSerie() : "");
             }
         });
     }

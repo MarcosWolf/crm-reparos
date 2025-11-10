@@ -28,4 +28,17 @@ public class TipoEquipamento {
 
     @Transient
     private Long totalReparos;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TipoEquipamento)) return false;
+        TipoEquipamento that = (TipoEquipamento) o;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }

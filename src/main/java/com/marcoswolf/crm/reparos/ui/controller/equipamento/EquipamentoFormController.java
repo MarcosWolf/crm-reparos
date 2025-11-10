@@ -83,7 +83,7 @@ public class EquipamentoFormController implements DataReceiver<Equipamento> {
 
     @Override
     public void setData(Equipamento equipamento) {
-        this.novoEquipamento = novoEquipamento;
+        this.novoEquipamento = equipamento;
         preencherFormulario(equipamento);
     }
 

@@ -7,7 +7,6 @@ import lombok.*;
 @Table(name = "equipamento")
 @Getter
 @Setter
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -45,5 +44,18 @@ public class Equipamento {
     @Override
     public String toString() {
         return getNome();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Equipamento)) return false;
+        Equipamento that = (Equipamento) o;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
     }
 }

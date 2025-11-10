@@ -7,7 +7,6 @@ import lombok.*;
 @Table(name = "cliente")
 @Getter
 @Setter
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -36,4 +35,17 @@ public class Cliente {
             @AttributeOverride(name = "cep", column = @Column(name = "endereco_cep"))
     })
     private Endereco endereco;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cliente)) return false;
+        Cliente that = (Cliente) o;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }

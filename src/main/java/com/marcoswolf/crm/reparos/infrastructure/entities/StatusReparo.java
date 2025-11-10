@@ -22,4 +22,17 @@ public class StatusReparo {
 
     @Transient
     private Long totalReparos;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof StatusReparo)) return false;
+        StatusReparo that = (StatusReparo) o;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }

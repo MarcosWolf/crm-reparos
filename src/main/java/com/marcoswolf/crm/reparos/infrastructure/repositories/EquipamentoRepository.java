@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EquipamentoRepository extends JpaRepository<Equipamento, Long> {
+    // Cliente
+    boolean existsByClienteId(Long clienteId);
+
     // Equipamento
     List<Equipamento> findByNumeroSerieContainingIgnoreCase(String numeroSerie);
     // TipoEquipamento

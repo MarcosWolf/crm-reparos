@@ -100,7 +100,6 @@
 
                     <Label text="Peças:" GridPane.rowIndex="5" />
                     <VBox spacing="8" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5">
-                        <!-- Linha de inputs para nova peça -->
                         <HBox alignment="CENTER_LEFT" spacing="8">
                             <TextField fx:id="txtPecaDescricao" promptText="Descrição" HBox.hgrow="ALWAYS" />
                             <TextField fx:id="txtPecaQuantidade" prefWidth="80" promptText="Qtd" />
