@@ -1,6 +1,6 @@
 package com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento;
 
-import com.marcoswolf.crm.reparos.business.tipoEquipamento.ITipoEquipamentoComandoService;
+import com.marcoswolf.crm.reparos.business.tipoEquipamento.TipoEquipamentoComandoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.ui.utils.AlertService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TipoEquipamentoSalvarAction implements TipoEquipamentoAction {
     private final TipoEquipamentoFormNormalizer normalizer;
-    private final ITipoEquipamentoComandoService tipoEquipamentoComandoService;
+    private final TipoEquipamentoComandoService tipoEquipamentoComandoService;
     private final TipoEquipamentoFormToEntityMapper mapper;
     private final TipoEquipamentoValidator validator;
     private final AlertService alertService;
@@ -22,7 +22,7 @@ public class TipoEquipamentoSalvarAction implements TipoEquipamentoAction {
             validator.validar(normalized, novoTipoEquipamento);
 
             TipoEquipamento tipoEquipamento = mapper.map(normalized, novoTipoEquipamento);
-            tipoEquipamentoComandoService.salvarTipoEquipamento(tipoEquipamento);
+            tipoEquipamentoComandoService.salvar(tipoEquipamento);
 
             alertService.info("Sucesso", "Tipo de equipamento salvo com sucesso!");
             return true;

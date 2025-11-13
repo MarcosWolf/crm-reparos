@@ -1,6 +1,6 @@
 package com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento;
 
-import com.marcoswolf.crm.reparos.business.tipoEquipamento.ITipoEquipamentoComandoService;
+import com.marcoswolf.crm.reparos.business.tipoEquipamento.TipoEquipamentoComandoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.ui.utils.AlertService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TipoEquipamentoExcluirAction implements TipoEquipamentoAction {
-    private final ITipoEquipamentoComandoService tipoEquipamentoComandoService;
+    private final TipoEquipamentoComandoService tipoEquipamentoComandoService;
     private final AlertService alertService;
 
     @Override
@@ -23,7 +23,7 @@ public class TipoEquipamentoExcluirAction implements TipoEquipamentoAction {
         if (!confirmar) return false;
 
         try {
-            tipoEquipamentoComandoService.deletarTipoEquipamento(tipoEquipamento.getId());
+            tipoEquipamentoComandoService.deletar(tipoEquipamento.getId());
             alertService.info("Sucesso", "Tipo de equipamento removido com sucesso!");
             return true;
         } catch (Exception e) {

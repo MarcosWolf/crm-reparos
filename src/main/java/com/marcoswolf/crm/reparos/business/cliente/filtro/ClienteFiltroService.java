@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ClienteFiltroService implements IClienteFiltroService {
+public class ClienteFiltroService implements ClienteFiltroServiceImpl {
     private final ClienteRepository clienteRepository;
     private final ReparoRepository reparoRepository;
 
