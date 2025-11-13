@@ -1,9 +1,9 @@
-package com.marcoswolf.crm.reparos.ui.handler.cliente;
+package com.marcoswolf.crm.reparos.ui.handler.cliente.action;
 
 import com.marcoswolf.crm.reparos.business.cliente.filtro.ClienteFiltro;
-import com.marcoswolf.crm.reparos.business.cliente.IClienteConsultaService;
 import com.marcoswolf.crm.reparos.business.cliente.filtro.IClienteFiltroService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.dto.ClienteFiltroDTO;
 import com.marcoswolf.crm.reparos.ui.utils.AlertService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

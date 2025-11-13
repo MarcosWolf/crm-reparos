@@ -9,6 +9,8 @@ import javafx.scene.control.TableView;
 import java.util.function.Consumer;
 
 public class TableUtils {
+    private TableUtils() {}
+
     public static <S, T> void centralizarColuna(TableColumn<S, T> coluna) {
         coluna.setCellFactory(tc -> new TableCell<S, T>() {
             @Override
