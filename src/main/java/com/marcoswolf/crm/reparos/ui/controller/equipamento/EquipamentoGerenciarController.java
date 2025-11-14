@@ -5,21 +5,16 @@ import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
 import com.marcoswolf.crm.reparos.ui.handler.equipamento.action.EquipamentoBuscarAction;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import com.marcoswolf.crm.reparos.ui.tables.EquipamentoTableView;
-import com.marcoswolf.crm.reparos.ui.utils.TableUtils;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
-@Scope("prototype")
 @RequiredArgsConstructor
 public class EquipamentoGerenciarController {
     private final MainViewController mainViewController;

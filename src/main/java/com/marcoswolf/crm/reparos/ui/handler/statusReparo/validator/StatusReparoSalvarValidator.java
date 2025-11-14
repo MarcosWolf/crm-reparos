@@ -1,17 +1,18 @@
-package com.marcoswolf.crm.reparos.ui.handler.statusReparo;
+package com.marcoswolf.crm.reparos.ui.handler.statusReparo.validator;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.StatusReparo;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.StatusReparoRepository;
+import com.marcoswolf.crm.reparos.ui.handler.statusReparo.dto.StatusReparoFormData;
 import org.springframework.stereotype.Component;
 
 import static com.marcoswolf.crm.reparos.ui.utils.ValidationUtils.isEmpty;
 
 @Component
-public class StatusReparoCamposObrigatoriosValidator implements StatusReparoValidator {
+public class StatusReparoSalvarValidator implements StatusReparoValidator {
 
     private final StatusReparoRepository statusReparoRepository;
 
-    public StatusReparoCamposObrigatoriosValidator(StatusReparoRepository statusReparoRepository) {
+    public StatusReparoSalvarValidator(StatusReparoRepository statusReparoRepository) {
         this.statusReparoRepository = statusReparoRepository;
     }
 

@@ -5,8 +5,6 @@ import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.dto.TipoEquipamentoFormData;
 import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.validator.TipoEquipamentoValidator;
 import com.marcoswolf.crm.reparos.ui.utils.AlertService;
-import javafx.scene.control.Alert;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 

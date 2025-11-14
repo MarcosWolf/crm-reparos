@@ -16,13 +16,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 @Component
-@Scope("prototype")
 @RequiredArgsConstructor
 public class ClienteGerenciarController {
     private final MainViewController mainViewController;

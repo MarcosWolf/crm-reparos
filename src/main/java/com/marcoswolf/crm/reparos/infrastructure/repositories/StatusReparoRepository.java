@@ -8,9 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface StatusReparoRepository extends JpaRepository<StatusReparo, Long> {
-    // StatusReparo
-    List<StatusReparo> findByNomeContainingIgnoreCase(String nome);
-
     @Query("""
         SELECT COUNT(c) > 0 
         FROM StatusReparo c 

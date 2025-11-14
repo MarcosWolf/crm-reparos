@@ -22,7 +22,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -31,7 +30,6 @@ import java.time.LocalDate;
 import java.util.Locale;
 
 @Component
-@Scope("prototype")
 @RequiredArgsConstructor
 public class ReparoFormController implements DataReceiver<Reparo> {
     private final ViewNavigator navigator;

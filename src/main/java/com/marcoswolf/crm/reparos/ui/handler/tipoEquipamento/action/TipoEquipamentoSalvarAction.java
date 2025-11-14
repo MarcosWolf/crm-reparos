@@ -20,17 +20,17 @@ public class TipoEquipamentoSalvarAction implements TipoEquipamentoAction {
     private final AlertService alertService;
 
     public TipoEquipamentoSalvarAction(
-            TipoEquipamentoFormNormalizer normalizer,
-            TipoEquipamentoComandoService tipoEquipamentoComandoService,
-            TipoEquipamentoFormToEntityMapper mapper,
-            @Qualifier("tipoEquipamentoSalvarValidator") TipoEquipamentoSalvarValidator validator,
-            AlertService alertService
-        ) {
-            this.normalizer = normalizer;
-            this.tipoEquipamentoComandoService = tipoEquipamentoComandoService;
-            this.mapper = mapper;
-            this.validator = validator;
-            this.alertService = alertService;
+        TipoEquipamentoFormNormalizer normalizer,
+        TipoEquipamentoComandoService tipoEquipamentoComandoService,
+        TipoEquipamentoFormToEntityMapper mapper,
+        @Qualifier("tipoEquipamentoSalvarValidator") TipoEquipamentoSalvarValidator validator,
+        AlertService alertService
+    ) {
+        this.normalizer = normalizer;
+        this.tipoEquipamentoComandoService = tipoEquipamentoComandoService;
+        this.mapper = mapper;
+        this.validator = validator;
+        this.alertService = alertService;
     }
 
     @Override

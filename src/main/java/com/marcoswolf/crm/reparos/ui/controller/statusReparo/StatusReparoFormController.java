@@ -1,9 +1,9 @@
 package com.marcoswolf.crm.reparos.ui.controller.statusReparo;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.StatusReparo;
-import com.marcoswolf.crm.reparos.ui.handler.statusReparo.StatusReparoExcluirAction;
-import com.marcoswolf.crm.reparos.ui.handler.statusReparo.StatusReparoFormData;
-import com.marcoswolf.crm.reparos.ui.handler.statusReparo.StatusReparoSalvarAction;
+import com.marcoswolf.crm.reparos.ui.handler.statusReparo.action.StatusReparoExcluirAction;
+import com.marcoswolf.crm.reparos.ui.handler.statusReparo.dto.StatusReparoFormData;
+import com.marcoswolf.crm.reparos.ui.handler.statusReparo.action.StatusReparoSalvarAction;
 import com.marcoswolf.crm.reparos.ui.interfaces.DataReceiver;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils;
@@ -13,16 +13,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
-@Scope("prototype")
 @RequiredArgsConstructor
 public class StatusReparoFormController implements DataReceiver<StatusReparo> {
     private final ViewNavigator navigator;
     private final StatusReparoSalvarAction salvarAction;
     private final StatusReparoExcluirAction excluirAction;
+
     private StatusReparo novoStatusReparo;
 
     @FXML private AnchorPane rootPane;
@@ -61,13 +60,13 @@ public class StatusReparoFormController implements DataReceiver<StatusReparo> {
         txtNome.setText(statusReparo.getNome());
     }
 
+    private void limparCampos() {
+        txtNome.clear();
+    }
+
     @FXML
     private void salvar() {
-        var data = new StatusReparoFormData(
-                txtNome.getText()
-        );
-
-        boolean sucesso = salvarAction.execute(novoStatusReparo, data);
+        boolean sucesso = salvarAction.execute(novoStatusReparo, criarFormData());
         if (sucesso) voltar();
     }
 
@@ -82,7 +81,9 @@ public class StatusReparoFormController implements DataReceiver<StatusReparo> {
         navigator.openViewRootPane(GERENCIAR_PATH, rootPane, null);
     }
 
-    private void limparCampos() {
-        txtNome.clear();
+    private StatusReparoFormData criarFormData() {
+        return new StatusReparoFormData(
+                txtNome.getText()
+        );
     }
 }

@@ -1,6 +1,7 @@
-package com.marcoswolf.crm.reparos.ui.handler.statusReparo;
+package com.marcoswolf.crm.reparos.ui.handler.statusReparo.mapper;
 
 import com.marcoswolf.crm.reparos.ui.handler.shared.IFormNormalizer;
+import com.marcoswolf.crm.reparos.ui.handler.statusReparo.dto.StatusReparoFormData;
 import org.springframework.stereotype.Component;
 
 @Component
