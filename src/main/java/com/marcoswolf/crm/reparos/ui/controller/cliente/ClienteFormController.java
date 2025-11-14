@@ -1,11 +1,11 @@
 package com.marcoswolf.crm.reparos.ui.controller.cliente;
 
-import com.marcoswolf.crm.reparos.business.estado.IEstadoConsultaService;
+import com.marcoswolf.crm.reparos.business.estado.EstadoConsultaService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
-import com.marcoswolf.crm.reparos.ui.handler.cliente.ClienteExcluirAction;
-import com.marcoswolf.crm.reparos.ui.handler.cliente.ClienteFormData;
-import com.marcoswolf.crm.reparos.ui.handler.cliente.ClienteSalvarAction;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.action.ClienteExcluirAction;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.dto.ClienteFormData;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.action.ClienteSalvarAction;
 import com.marcoswolf.crm.reparos.ui.interfaces.DataReceiver;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import com.marcoswolf.crm.reparos.ui.utils.*;
@@ -16,47 +16,49 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import static com.marcoswolf.crm.reparos.ui.utils.ParseUtils.parseInteger;
 
 @Component
-@Scope("prototype")
 @RequiredArgsConstructor
 public class ClienteFormController implements DataReceiver<Cliente> {
     private final ViewNavigator navigator;
+
+    private final EstadoConsultaService estadoConsultaService;
+
     private final ClienteSalvarAction salvarAction;
     private final ClienteExcluirAction excluirAction;
+
     private Cliente novoCliente;
-    private final IEstadoConsultaService estadoConsultaService;
 
     @FXML private AnchorPane rootPane;
     @FXML private Label lblTitulo;
     @FXML private TextField txtNome, txtTelefone, txtEmail, txtCidade, txtBairro, txtCep, txtLogradouro, txtNumero;
-    @FXML private Button btnExcluir;
     @FXML private ComboBox<Estado> comboEstado;
+    @FXML private Button btnExcluir;
 
     private static final String GERENCIAR_PATH = "/fxml/cliente/cliente-gerenciar.fxml";
 
     @FXML
     public void initialize() {
         configurarCampos();
-        alimentarComboBox();
+        carregarEstados();
     }
 
     private void configurarCampos() {
         TextFieldUtils.aplicarLimite(txtNome, 50);
-        MaskUtils.aplicarMascaraTelefone(txtTelefone);
         TextFieldUtils.aplicarLimite(txtEmail, 80);
         TextFieldUtils.aplicarLimite(txtCidade, 50);
         TextFieldUtils.aplicarLimite(txtBairro, 50);
-        MaskUtils.aplicarMascaraCEP(txtCep);
         TextFieldUtils.aplicarLimite(txtLogradouro, 80);
         TextFieldUtils.aplicarLimite(txtNumero, 8);
+
+        MaskUtils.aplicarMascaraCEP(txtCep);
+        MaskUtils.aplicarMascaraTelefone(txtTelefone);
     }
 
-    private void alimentarComboBox() {
+    private void carregarEstados() {
         ComboBoxUtils.carregarCombo(
                 comboEstado,
                 estadoConsultaService.listarTodos(),
@@ -92,40 +94,22 @@ public class ClienteFormController implements DataReceiver<Cliente> {
         txtEmail.setText(cliente.getEmail());
 
         if (cliente.getEndereco() != null) {
-            txtCidade.setText(cliente.getEndereco().getCidade());
-            txtBairro.setText(cliente.getEndereco().getBairro());
-            txtCep.setText(cliente.getEndereco().getCep());
-            txtLogradouro.setText(cliente.getEndereco().getLogradouro());
-            txtNumero.setText(cliente.getEndereco().getNumero() != null
-                    ? cliente.getEndereco().getNumero().toString()
-                    : "");
-            comboEstado.setValue(cliente.getEndereco().getEstado());
+            setEndereco(cliente);
+
         } else {
             limparCamposEndereco();
         }
     }
 
-    @FXML
-    private void salvar() {
-        var data = new ClienteFormData(
-                txtNome.getText(), txtTelefone.getText(), txtEmail.getText(),
-                txtCidade.getText(), txtBairro.getText(), txtCep.getText(),
-                txtLogradouro.getText(), parseInteger(txtNumero), comboEstado.getValue()
-        );
-
-        boolean sucesso = salvarAction.execute(novoCliente, data);
-        if (sucesso) voltar();
-    }
-
-    @FXML
-    private void excluir() {
-        boolean sucesso = excluirAction.execute(novoCliente, null);
-        if (sucesso) voltar();
-    }
-
-    @FXML
-    private void voltar() {
-        navigator.openViewRootPane(GERENCIAR_PATH, rootPane, null);
+    private void setEndereco(Cliente cliente) {
+        txtCidade.setText(cliente.getEndereco().getCidade());
+        txtBairro.setText(cliente.getEndereco().getBairro());
+        txtCep.setText(cliente.getEndereco().getCep());
+        txtLogradouro.setText(cliente.getEndereco().getLogradouro());
+        txtNumero.setText(cliente.getEndereco().getNumero() != null
+                ? cliente.getEndereco().getNumero().toString()
+                : "");
+        comboEstado.setValue(cliente.getEndereco().getEstado());
     }
 
     private void limparCampos() {
@@ -142,5 +126,36 @@ public class ClienteFormController implements DataReceiver<Cliente> {
         txtCep.clear();
         txtLogradouro.clear();
         txtNumero.clear();
+    }
+
+    @FXML
+    private void salvar() {
+        boolean sucesso = salvarAction.execute(novoCliente, criarFormData());
+        if (sucesso) voltar();
+    }
+
+    @FXML
+    private void excluir() {
+        boolean sucesso = excluirAction.execute(novoCliente, null);
+        if (sucesso) voltar();
+    }
+
+    @FXML
+    private void voltar() {
+        navigator.openViewRootPane(GERENCIAR_PATH, rootPane, null);
+    }
+
+    private ClienteFormData criarFormData() {
+        return new ClienteFormData(
+                txtNome.getText(),
+                txtTelefone.getText(),
+                txtEmail.getText(),
+                txtCidade.getText(),
+                txtBairro.getText(),
+                txtCep.getText(),
+                txtLogradouro.getText(),
+                parseInteger(txtNumero),
+                comboEstado.getValue()
+        );
     }
 }

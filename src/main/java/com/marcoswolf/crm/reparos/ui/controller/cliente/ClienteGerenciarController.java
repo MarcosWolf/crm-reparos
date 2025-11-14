@@ -3,23 +3,24 @@ package com.marcoswolf.crm.reparos.ui.controller.cliente;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
-import com.marcoswolf.crm.reparos.ui.handler.cliente.*;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.action.ClienteBuscarAction;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.action.ClienteFiltrarAction;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.action.ClienteLimparFiltrosAction;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.action.ClienteToggleFiltrosAction;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.dto.ClienteFiltroDTO;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
-import com.marcoswolf.crm.reparos.ui.utils.TableUtils;
-import javafx.beans.property.SimpleStringProperty;
+import com.marcoswolf.crm.reparos.ui.tables.ClienteTableView;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 @Component
-@Scope("prototype")
 @RequiredArgsConstructor
 public class ClienteGerenciarController {
     private final MainViewController mainViewController;
@@ -48,44 +49,12 @@ public class ClienteGerenciarController {
 
     @FXML
     private void initialize() {
-        configurarTabela();
-    }
-
-    private void configurarTabela() {
-
-        instanciarTabela();
+        ClienteTableView.configurarTabela(tabela, colNome, colTelefone, colCidade, colEstado, this::editar);
         alimentarTabela();
-
-        TableUtils.setDoubleClickAction(tabela, itemSelecionado -> {
-            editar(itemSelecionado);
-        });
-
-        centralizarColunas();
-    }
-
-    private void instanciarTabela() {
-        colNome.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNome()));
-        colTelefone.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTelefone()));
-        colCidade.setCellValueFactory(c -> new SimpleStringProperty(
-                c.getValue().getEndereco() != null ? c.getValue().getEndereco().getCidade() : ""
-        ));
-        colEstado.setCellValueFactory(c -> {
-            var endereco = c.getValue().getEndereco();
-            return new SimpleStringProperty(
-                    endereco != null && endereco.getEstado() != null ? endereco.getEstado().getNome() : ""
-            );
-        });
     }
 
     private void alimentarTabela() {
-        var clientes = buscarAction.executar("");
-        tabela.setItems(FXCollections.observableList(clientes));
-    }
-
-    private void centralizarColunas() {
-        TableUtils.centralizarColuna(colCidade);
-        TableUtils.centralizarColuna(colEstado);
-        TableUtils.centralizarColuna(colTelefone);
+        tabela.setItems(FXCollections.observableList(buscarAction.executar("")));
     }
 
     @FXML
@@ -95,14 +64,16 @@ public class ClienteGerenciarController {
 
     @FXML
     public void buscar() {
-        var nome = txtBuscar.getText();
-        var clientes = buscarAction.executar(nome);
-        tabela.setItems(FXCollections.observableList(clientes));
+        tabela.setItems(FXCollections.observableList(buscarAction.executar(txtBuscar.getText())));
     }
 
     @FXML
     public void cadastrar() {
         navigator.openView(FORM_PATH, mainViewController.getContentArea(), null);
+    }
+
+    private void editar(Cliente cliente) {
+        navigator.openView(FORM_PATH, mainViewController.getContentArea(), cliente);
     }
 
     @FXML
@@ -120,8 +91,7 @@ public class ClienteGerenciarController {
                 LocalDate.now().minusDays(30)
         );
 
-        var clientes = filtrarAction.executar(filtro);
-        tabela.setItems(FXCollections.observableList(clientes));
+        tabela.setItems(FXCollections.observableList(filtrarAction.executar(filtro)));
         filtrosVisiveis = toggleFiltrosAction.executar(filtrosVisiveis, filtroPane);
     }
 
@@ -131,7 +101,5 @@ public class ClienteGerenciarController {
         alimentarTabela();
     }
 
-    private void editar(Cliente cliente) {
-        navigator.openView(FORM_PATH, mainViewController.getContentArea(), cliente);
-    }
+
 }

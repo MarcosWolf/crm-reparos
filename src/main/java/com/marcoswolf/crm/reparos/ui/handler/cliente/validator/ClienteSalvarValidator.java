@@ -9,11 +9,11 @@ import com.marcoswolf.crm.reparos.ui.handler.cliente.dto.ClienteFormData;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ClienteFormValidator implements ClienteValidator {
+public class ClienteSalvarValidator implements ClienteValidator {
 
     private final ClienteRepository clienteRepository;
 
-    public ClienteFormValidator(ClienteRepository clienteRepository) {
+    public ClienteSalvarValidator(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
     }
 

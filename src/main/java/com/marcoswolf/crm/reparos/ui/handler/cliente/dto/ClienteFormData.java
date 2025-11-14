@@ -1,4 +1,4 @@
-package com.marcoswolf.crm.reparos.ui.handler.cliente;
+package com.marcoswolf.crm.reparos.ui.handler.cliente.dto;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
 import com.marcoswolf.crm.reparos.ui.handler.shared.IFormData;

@@ -1,20 +1,36 @@
-package com.marcoswolf.crm.reparos.ui.handler.cliente;
+package com.marcoswolf.crm.reparos.ui.handler.cliente.action;
 
-import com.marcoswolf.crm.reparos.business.cliente.IClienteComandoService;
+import com.marcoswolf.crm.reparos.business.cliente.ClienteComandoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
-import com.marcoswolf.crm.reparos.ui.handler.cliente.action.ClienteAction;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.dto.ClienteFormData;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.mapper.ClienteFormNormalizer;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.mapper.ClienteFormToEntityMapper;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.validator.ClienteValidator;
 import com.marcoswolf.crm.reparos.ui.utils.AlertService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class ClienteSalvarAction implements ClienteAction {
     private final ClienteFormNormalizer normalizer;
-    private final IClienteComandoService clienteComandoService;
+    private final ClienteComandoService clienteComandoService;
     private final ClienteFormToEntityMapper mapper;
     private final ClienteValidator validator;
     private final AlertService alertService;
+
+    public ClienteSalvarAction(
+        ClienteFormNormalizer normalizer,
+        ClienteComandoService clienteComandoService,
+        ClienteFormToEntityMapper mapper,
+        @Qualifier("clienteSalvarValidator") ClienteValidator validator,
+        AlertService alertService
+    ) {
+        this.normalizer = normalizer;
+        this.clienteComandoService = clienteComandoService;
+        this.mapper = mapper;
+        this.validator = validator;
+        this.alertService = alertService;
+    }
 
     @Override
     public boolean execute(Cliente novoCliente, ClienteFormData data) {
@@ -23,7 +39,7 @@ public class ClienteSalvarAction implements ClienteAction {
             validator.validar(normalized, novoCliente);
 
             Cliente cliente = mapper.map(normalized, novoCliente);
-            clienteComandoService.salvarCliente(cliente);
+            clienteComandoService.salvar(cliente);
 
             alertService.info("Sucesso", "Cliente salvo com sucesso!");
             return true;

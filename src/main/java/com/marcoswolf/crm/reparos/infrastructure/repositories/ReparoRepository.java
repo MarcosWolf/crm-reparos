@@ -33,13 +33,15 @@ public interface ReparoRepository extends JpaRepository<Reparo, Long> {
 
     // Cliente
     List<Reparo> findByEquipamento_Cliente_Id(Long id);
-    boolean existsByEquipamento_Cliente_IdAndPagamento_DataPagamentoIsNull(Long clienteId);
-    boolean existsByEquipamento_Cliente_IdAndDataEntradaAfter(Long clientId, LocalDate dataEntrada);
+    boolean existsByEquipamento_Cliente_IdAndPagamento_DataPagamentoIsNull(Long id);
+    boolean existsByEquipamento_Cliente_IdAndDataEntradaAfter(Long id, LocalDate dataEntrada);
+
     // Equipamento
-    List<Reparo> findByEquipamento_Id(Long id);
-    boolean existsByEquipamento_Cliente_Id(Long clienteId);
+    boolean existsByEquipamento_Cliente_Id(Long id);
+    boolean existsByEquipamento_Id(Long id);
+
     // StatusReparo
-    List<Reparo> findByStatus_Id(Long id);
+    boolean existsByStatus_Id(Long id);
 
     // Tipo Equipamento
     @Query("""

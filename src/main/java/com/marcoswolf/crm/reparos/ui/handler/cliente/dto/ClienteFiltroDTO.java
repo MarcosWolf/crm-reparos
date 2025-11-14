@@ -1,4 +1,4 @@
-package com.marcoswolf.crm.reparos.ui.handler.cliente;
+package com.marcoswolf.crm.reparos.ui.handler.cliente.dto;
 
 import java.time.LocalDate;
 

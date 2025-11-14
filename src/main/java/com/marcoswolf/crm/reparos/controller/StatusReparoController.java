@@ -15,30 +15,20 @@ import java.util.List;
 public class StatusReparoController {
     private final StatusReparoService service;
 
-    // Create
     @PostMapping
-    public ResponseEntity<StatusReparo> salvarStatusReparo(@RequestBody StatusReparo statusReparo) {
+    public ResponseEntity<StatusReparo> salvar(@RequestBody StatusReparo statusReparo) {
         service.salvar(statusReparo);
         return ResponseEntity.ok(statusReparo);
     }
 
-    // Read
     @GetMapping
-    public ResponseEntity<List<StatusReparo>> buscarStatusReparo(@RequestParam String nome) {
-        List<StatusReparo> statusReparos = service.buscarPorNome(nome);
+    public ResponseEntity<List<StatusReparo>> listarTodos() {
+        List<StatusReparo> statusReparos = service.listarTodos();
         return ResponseEntity.ok(statusReparos);
     }
 
-    // Update
-    @PutMapping
-    public ResponseEntity<StatusReparo> atualizarStatusReparo(@RequestParam Long id, @RequestBody StatusReparo statusReparo) {
-        StatusReparo novoStatusReparo = service.atualizar(id, statusReparo);
-        return ResponseEntity.ok(novoStatusReparo);
-    }
-
-    // Delete
     @DeleteMapping
-    public ResponseEntity<String> deletarStatusReparo(@RequestParam Long id) {
+    public ResponseEntity<String> deletar(@RequestParam Long id) {
         try {
             service.deletar(id);
             return ResponseEntity.ok("Status de reparo deletado com sucesso.");
