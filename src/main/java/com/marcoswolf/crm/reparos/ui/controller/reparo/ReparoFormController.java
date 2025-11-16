@@ -4,6 +4,7 @@ import com.marcoswolf.crm.reparos.business.cliente.ClienteConsultaService;
 import com.marcoswolf.crm.reparos.business.equipamento.EquipamentoConsultaService;
 import com.marcoswolf.crm.reparos.business.statusReparo.StatusReparoConsultaService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.*;
+import com.marcoswolf.crm.reparos.ui.handler.pecaPagamento.validator.PecaPagamentoSalvarValidator;
 import com.marcoswolf.crm.reparos.ui.handler.reparo.action.ReparoExcluirAction;
 import com.marcoswolf.crm.reparos.ui.handler.reparo.dto.ReparoFormData;
 import com.marcoswolf.crm.reparos.ui.handler.reparo.action.ReparoSalvarAction;
@@ -11,6 +12,7 @@ import com.marcoswolf.crm.reparos.ui.interfaces.DataReceiver;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import com.marcoswolf.crm.reparos.ui.tables.PecaPagamentoTableView;
 import com.marcoswolf.crm.reparos.ui.utils.ComboBoxUtils;
+import com.marcoswolf.crm.reparos.ui.utils.MaskUtils;
 import com.marcoswolf.crm.reparos.ui.utils.ParseUtils;
 import com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils;
 import javafx.beans.property.SimpleStringProperty;
@@ -34,6 +36,7 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     private final ClienteConsultaService clienteConsultaService;
     private final EquipamentoConsultaService equipamentoConsultaService;
     private final StatusReparoConsultaService statusReparoConsultaService;
+    private final PecaPagamentoSalvarValidator pecaValidator;
 
     private final ReparoSalvarAction salvarAction;
     private final ReparoExcluirAction excluirAction;
@@ -70,8 +73,11 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     }
 
     private void configurarCampos() {
-        TextFieldUtils.aplicarMascaraNumerica(txtValorServico);
-        TextFieldUtils.aplicarMascaraNumerica(txtDesconto);
+        MaskUtils.aplicarMascaraData(dateEntrada);
+        MaskUtils.aplicarMascaraData(dateSaida);
+        MaskUtils.aplicarMascaraData(datePagamento);
+        MaskUtils.aplicarMascaraMonetaria(txtValorServico);
+        MaskUtils.aplicarMascaraMonetaria(txtDesconto);
         txtValorTotal.setEditable(false);
     }
 
@@ -135,19 +141,23 @@ public class ReparoFormController implements DataReceiver<Reparo> {
 
     @FXML
     private void adicionarPeca() {
-        if (txtPecaDescricao.getText().isBlank()) return;
+        String descricao = txtPecaDescricao.getText();
+        Integer quantidade = ParseUtils.parseInteger(txtPecaQuantidade);
+        BigDecimal valorUnit = ParseUtils.parseBigDecimal(txtPecaValorUnitario);
 
         try {
+            pecaValidator.validar(descricao, quantidade, valorUnit);
+
             PecaPagamento nova = new PecaPagamento();
-            nova.setNome(txtPecaDescricao.getText());
-            nova.setQuantidade(Integer.parseInt(txtPecaQuantidade.getText()));
-            nova.setValor(ParseUtils.parseBigDecimal(txtPecaValorUnitario));
+            nova.setNome(descricao);
+            nova.setQuantidade(quantidade);
+            nova.setValor(valorUnit);
             pecas.add(nova);
             limparCamposPeca();
             tabela.refresh();
             recalcularTotal();
-        } catch (Exception ex) {
-            new Alert(Alert.AlertType.WARNING, "Quantidade e valor devem ser numéricos.").showAndWait();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.WARNING, e.getMessage()).showAndWait();
         }
     }
 
@@ -158,10 +168,16 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     }
 
     private void recalcularTotal() {
-        BigDecimal valorServico = ParseUtils.parseBigDecimal(txtValorServico);
-        BigDecimal desconto = ParseUtils.parseBigDecimal(txtDesconto);
-        BigDecimal totalPecas = pecas.stream().map(PecaPagamento::getTotalLinha).reduce(BigDecimal.ZERO, BigDecimal::add);
-        txtValorTotal.setText(valorServico.add(totalPecas).subtract(desconto).toString());
+        BigDecimal valorServico = ParseUtils.parseValorBR(txtValorServico.getText());
+        BigDecimal desconto = ParseUtils.parseValorBR(txtDesconto.getText());
+
+        BigDecimal totalPecas = pecas.stream()
+                .map(PecaPagamento::getTotalLinha)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal total = valorServico.add(totalPecas).subtract(desconto);
+
+        txtValorTotal.setText(ParseUtils.formatarValorBR(total));
     }
 
     @Override

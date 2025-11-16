@@ -2,6 +2,9 @@ package com.marcoswolf.crm.reparos.ui.utils;
 
 import javafx.scene.control.TextField;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class ParseUtils {
     public static Integer parseInteger(TextField campo) {
@@ -44,8 +47,18 @@ public class ParseUtils {
         }
     }
 
-    private static String limparTexto(TextField campo) {
-        if (campo == null || campo.getText() == null) return "";
-        return campo.getText().trim();
+    public static BigDecimal parseValorBR(String txt) {
+        if (txt == null || txt.isBlank()) return BigDecimal.ZERO;
+        txt = txt.replace(".", "").replace(",", ".");
+        return new BigDecimal(txt);
+    }
+
+    public static String formatarValorBR(BigDecimal valor) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
+        symbols.setDecimalSeparator(',');
+        symbols.setGroupingSeparator('.');
+
+        DecimalFormat df = new DecimalFormat("#,##0.00", symbols);
+        return df.format(valor);
     }
 }
