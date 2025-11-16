@@ -1,9 +1,11 @@
 package com.marcoswolf.crm.reparos.ui.handler.reparo.validator;
 
+import com.marcoswolf.crm.reparos.infrastructure.entities.PecaPagamento;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Reparo;
-import com.marcoswolf.crm.reparos.infrastructure.repositories.ReparoRepository;
 import com.marcoswolf.crm.reparos.ui.handler.reparo.dto.ReparoFormData;
 import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
 
 import static com.marcoswolf.crm.reparos.ui.utils.ValidationUtils.isEmpty;
 
@@ -27,5 +29,24 @@ public class ReparoSalvarValidator implements ReparoValidator {
         if (isEmpty(data.descricaoProblema())) {
             throw new IllegalArgumentException("O campo descrição do defeito é obrigatório.");
         }
+
+        if (!validarValorTotal(data)) {
+            throw new IllegalArgumentException("O valor total não pode ser negativo.");
+        }
+    }
+
+    private boolean validarValorTotal(ReparoFormData data) {
+        BigDecimal valorServico = data.valorServico() != null ? data.valorServico() : BigDecimal.ZERO;
+        BigDecimal desconto = data.desconto() != null ? data.desconto() : BigDecimal.ZERO;
+
+        BigDecimal totalPecas = data.pecas() != null
+                ? data.pecas().stream()
+                .map(PecaPagamento::getTotalLinha)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                : BigDecimal.ZERO;
+
+        BigDecimal valorTotal = valorServico.add(totalPecas).subtract(desconto);
+
+        return valorTotal.compareTo(BigDecimal.ZERO) >= 0;
     }
 }

@@ -12,6 +12,7 @@ import com.marcoswolf.crm.reparos.ui.interfaces.DataReceiver;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import com.marcoswolf.crm.reparos.ui.tables.PecaPagamentoTableView;
 import com.marcoswolf.crm.reparos.ui.utils.ComboBoxUtils;
+import com.marcoswolf.crm.reparos.ui.utils.MaskUtils;
 import com.marcoswolf.crm.reparos.ui.utils.ParseUtils;
 import com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils;
 import javafx.beans.property.SimpleStringProperty;
@@ -72,8 +73,11 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     }
 
     private void configurarCampos() {
-        TextFieldUtils.aplicarMascaraNumerica(txtValorServico);
-        TextFieldUtils.aplicarMascaraNumerica(txtDesconto);
+        MaskUtils.aplicarMascaraData(dateEntrada);
+        MaskUtils.aplicarMascaraData(dateSaida);
+        MaskUtils.aplicarMascaraData(datePagamento);
+        MaskUtils.aplicarMascaraMonetaria(txtValorServico);
+        MaskUtils.aplicarMascaraMonetaria(txtDesconto);
         txtValorTotal.setEditable(false);
     }
 
@@ -164,10 +168,16 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     }
 
     private void recalcularTotal() {
-        BigDecimal valorServico = ParseUtils.parseBigDecimal(txtValorServico);
-        BigDecimal desconto = ParseUtils.parseBigDecimal(txtDesconto);
-        BigDecimal totalPecas = pecas.stream().map(PecaPagamento::getTotalLinha).reduce(BigDecimal.ZERO, BigDecimal::add);
-        txtValorTotal.setText(valorServico.add(totalPecas).subtract(desconto).toString());
+        BigDecimal valorServico = ParseUtils.parseValorBR(txtValorServico.getText());
+        BigDecimal desconto = ParseUtils.parseValorBR(txtDesconto.getText());
+
+        BigDecimal totalPecas = pecas.stream()
+                .map(PecaPagamento::getTotalLinha)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal total = valorServico.add(totalPecas).subtract(desconto);
+
+        txtValorTotal.setText(ParseUtils.formatarValorBR(total));
     }
 
     @Override
